@@ -1,0 +1,5 @@
+<?php
+/**
+ * ACL
+ */
+return false;

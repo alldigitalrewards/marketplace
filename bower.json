@@ -1,0 +1,30 @@
+{
+  "name": "zewa",
+  "version": "0.5.0",
+  "homepage": "https://github.com/zewadesign/app",
+  "authors": [
+    "zech <zech@zewadesign.com>"
+  ],
+  "description": "Light-wight module based MVC, with centralized models.",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "select2": "~4.0.0",
+    "bxslider-4": "~4.2.5",
+    "jquery.actual": "~1.0.17",
+    "font-awesome": "~4.4.0",
+    "jquery-ui": "~1.11.4",
+    "owl.carousel": "~2.0.0-beta.3",
+    "fancybox": "~2.1.5",
+    "elevatezoom": "~2.2.3",
+    "jquery.gritter": "~1.7.4"
+  }
+}

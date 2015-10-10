@@ -1,0 +1,34 @@
+# IDE Files
+.idea/
+
+# Logs
+access.log
+error.log
+
+# Buildable Files
+build/logs/
+build/pdepend/
+
+#ws: Composer Sourced Files
+composer.lock
+vendor/
+
+# Bower resources
+/public/resources/*
+
+# Git
+.gitattributes
+
+# Vagrant
+.vagrant/
+
+#Application resources
+!/public/resources/app/
+
+#Non-bower dependenies
+!/public/resources/countdown
+
+# Custom Libraries
+!/public/resources/request.js
+!/public/resources/paginator.js
+!/public/resources/querystring.js
