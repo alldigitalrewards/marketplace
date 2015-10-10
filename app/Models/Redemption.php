@@ -2,33 +2,24 @@
 
 namespace App\Models;
 
-use Curl\Curl;
-use App\Traits;
-
 Class Redemption extends \Zewa\Model
 {
-    use Traits\RemoteTrait;
-    
+    private $rewards;
+
     public function __construct()
     {
         parent::__construct();
-        $this->remoteUri = 'redemption';
+
+        $endpoint = 'http://google.alldigitalrewards.com';
+        $apiUser = 'alldigitalrewards';
+        $apiKey = '6e68b012d3bc897df484300926b976';
+
+        $this->rewards = new \ADR\Rewards($endpoint, $apiUser, $apiKey);
     }
-    
-    public function fetchProductsByPin($pin, $page = 0, $offset = 30) 
+
+    public function fetchProductsByPin($pin)
     {
-        $page++;
-        $response = 
-            $this->request([
-                'page' => $page,
-                'offset' => $offset
-            ],'get','getPrizesByPin/'. $pin);
-        
-        if ($this->curlError) {
-            return false;
-        }
-        
-        return $response;
+        return json_decode($this->rewards->getRedemptionCampaign($pin));
     }
     
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Module\Account\Controllers;
+namespace App\Modules\Account\Controllers;
 
 use Zewa\View;
 use App\Models;

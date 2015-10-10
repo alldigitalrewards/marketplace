@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Module\Redemption\Controllers;
+namespace App\Modules\Redemption\Controllers;
 
 use Zewa\View;
 use App\Models;

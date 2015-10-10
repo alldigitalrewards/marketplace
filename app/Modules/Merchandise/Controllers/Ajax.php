@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Module\Merchandise\Controllers;
+namespace App\Modules\Merchandise\Controllers;
 
 use Zewa\View;
 use App\Models;

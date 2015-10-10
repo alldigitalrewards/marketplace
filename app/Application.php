@@ -11,6 +11,9 @@ if (!ob_start("ob_gzhandler")) {
 }
 
 $app = new \Zewa\App();
+define('GUEST_ID', 1);
+define('ADMIN_ID', 2);
+define('USER_ID', 3);
 print $app->initialize();
 
 

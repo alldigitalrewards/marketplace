@@ -7,25 +7,30 @@ use App\Traits;
 
 Class User extends \Zewa\Model
 {
-    use Traits\RemoteTrait;
-    
+    private $rewards;
+
     public function __construct()
     {
         parent::__construct();
-        $this->remoteUri = 'user';
+
+        $endpoint = 'http://google.alldigitalrewards.com';
+        $apiUser = 'alldigitalrewards';
+        $apiKey = '6e68b012d3bc897df484300926b976';
+
+        $this->rewards = new \ADR\Rewards($endpoint, $apiUser, $apiKey);
     }
     
-    public function create($data,$role = false) 
+    public function create($data, $role = false)
     {
         if (!$role) {
             $role = USER_ID;
         }
         
-        //The user's mutual ID between servers
+        //The user's shared ID between servers
         $uniqueId = hexdec(substr(sha1($data['email_address']), 0, 15));
         
         //Create user on remote server
-        $response = $this->request([
+        $result = json_decode($this->rewards->createUser([
             'unique_id' => $uniqueId,
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
@@ -33,18 +38,17 @@ Class User extends \Zewa\Model
             'password' => $data['password'],
             'credit' => 25000,
             'role' => $role
-        ],'post');
+        ]));
         
-        if (!$response->success) {
-            return $response;
+        if ($result->success === false) {
+            return $result;
         }
         
         //Create user locally
         $sql = 'INSERT INTO User (unique_id,firstname,lastname,email_address,password) '
              . 'VALUES (?,?,?,?,?)';
         
-        $data['password'] = 
-            password_hash($data['password'], PASSWORD_BCRYPT, ['cost' => 11]);
+        $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT, ['cost' => 11]);
         
         $arguments = [];
         $arguments[] = $uniqueId;
@@ -79,7 +83,7 @@ Class User extends \Zewa\Model
     
     public function fetchUserByUniqueId($uniqueId)
     {
-        return $this->request([],'get','index/'.$uniqueId);//Cache user data
+        return json_decode($this->rewards->getUser($uniqueId));
     }
     
     public function updateUserByUniqueId($uniqueId, $data) 
@@ -108,13 +112,9 @@ Class User extends \Zewa\Model
         }
         
         //Update user on remote server
-        $response = $this->request($data,'put','index/'.$uniqueId);
-        
-        if ($this->curlError) {
-            return $response;
-        } else {
-            return true;
-        }
+        $result = $this->rewards->updateUser($uniqueId, $data);
+
+        return $result->success;
     }
     
     public function updateCartId($userId,$cartId) 

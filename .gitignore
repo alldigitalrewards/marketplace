@@ -1,6 +1,8 @@
 # IDE Files
 .idea/
-
+.config
+.bash_history
+.cache
 # Logs
 access.log
 error.log
