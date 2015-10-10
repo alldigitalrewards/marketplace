@@ -21,7 +21,6 @@
   "require": {
     "php": ">=5.4.0",
     "zewa/framework": "dev-master",
-    "php-curl-class/php-curl-class": "^4.6",
     "respect/validation": "^0.9.3",
     "alldigitalrewards/rewards": "^1.0"
   },

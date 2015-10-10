@@ -35,17 +35,7 @@ Class Merchandise extends \Zewa\Model
     {
         return json_decode($this->rewards->getRewardCategories());
     }
-//
-//    public function fetchProductsByCategoryId($categoryId, $page = 1, $perPage = 50)
-//    {
-//        $page++;
-//        return $this->request([
-//            'page' => $page,
-//            'offset' => $perPage,
-//            'categoryId' => $categoryId
-//        ],'get','index');
-//    }
-    
+
     public function fetchCategoriesAndProducts($page = 1, $perPage = 50)
     {
         $categories = $this->fetchCategories();
