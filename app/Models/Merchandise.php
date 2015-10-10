@@ -2,94 +2,74 @@
 
 namespace App\Models;
 
-use Curl\Curl;
-use App\Traits;
-
 Class Merchandise extends \Zewa\Model
 {
-    use Traits\RemoteTrait;
-    
+    private $rewards;
+
     public function __construct()
     {
         parent::__construct();
-        $this->remoteUri = 'reward';
+
+        $endpoint = 'http://google.alldigitalrewards.com';
+        $apiUser = 'alldigitalrewards';
+        $apiKey = '6e68b012d3bc897df484300926b976';
+
+        $this->rewards = new \ADR\Rewards($endpoint, $apiUser, $apiKey);
     }
     
-    public function fetchProduct($productId) {
-        if (!$productId) {
-            return false;
-        }
-        return $this->request([],'get','index/'.$productId);
+    public function fetchReward($rewardId) {
+        return json_decode($this->rewards->getReward($rewardId));
     }
 
-    public function fetchProducts($page = 0, $perPage = 5, $filters = []) 
+    public function fetchRewards($page = 1, $perPage = 30, $filters = [])
     {
-        $page++;
-        $filters['page'] = $page;
-        $filters['offset'] = $perPage;
-        return $this->request($filters,'get','index');
+        return json_decode($this->rewards->getRewards($page, $perPage, $filters));
     }
 
-    public function fetchHotPicks($page = 0, $perPage = 5) 
+    public function fetchHotPicks()
     {
-        return $this->request([
-            'page' => $page, 
-            'offset' => $perPage, 
-            'hotpick' => 1
-        ],'get','index');
+        return json_decode($this->rewards->getRewards(1, 100, ['hotpick' => true]));
     }
     
-    public function fetchCategories($page = 0, $perPage = 6) 
+    public function fetchCategories()
     {
-        return $this->request([
-            'page' => $page, 
-            'offset' => $perPage,
-        ],'get','category');
+        return json_decode($this->rewards->getRewardCategories());
     }
+//
+//    public function fetchProductsByCategoryId($categoryId, $page = 1, $perPage = 50)
+//    {
+//        $page++;
+//        return $this->request([
+//            'page' => $page,
+//            'offset' => $perPage,
+//            'categoryId' => $categoryId
+//        ],'get','index');
+//    }
     
-    public function fetchProductsByCategoryId($categoryId, $page = 0, $perPage = 50) 
+    public function fetchCategoriesAndProducts($page = 1, $perPage = 50)
     {
-        $page++;
-        return $this->request([
-            'page' => $page, 
-            'offset' => $perPage,
-            'categoryId' => $categoryId
-        ],'get','index');
-    }
-    
-    public function fetchCategoriesAndProducts($page = 0, $perPage = 50) 
-    {
-        $categoires = $this->fetchCategories();
-        
-        if (!empty($categoires)) {
+        $categories = $this->fetchCategories();
+
+        if (!empty($categories)) {
             
-            foreach($categoires as $key => $category) {
+            foreach($categories as $key => $category) {
                 
                 if ($category->active == 'no') {
-                    unset($categoires[$key]);
+                    unset($categories[$key]);
                     continue;
                 }
-                
-                $categoires[$key]->products = 
-                    $this->fetchProductsByCategoryId(
-                        $category->id,
-                        $page,
-                        $perPage
-                    );
+
+                $categories[$key]->products = $this->fetchRewards($page, $perPage, ['categoryId' => $category->id]);
                 
             }
             
         }
         
-        return !empty($categoires) ? $categoires : false;
+        return ! empty ( $categories ) ? $categories : false;
     }
     
-    public function fetchFeaturedProducts($page = 0, $perPage = 50) {
-        return $this->request([
-            'page' => $page, 
-            'offset' => $perPage,
-            'featured' => true
-        ],'get','index');
+    public function fetchFeaturedProducts() {
+        return json_decode($this->rewards->getRewards(1, 100, ['featured' => true]));
     }
     
 }

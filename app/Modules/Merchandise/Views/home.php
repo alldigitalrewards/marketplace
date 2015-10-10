@@ -34,6 +34,7 @@
     </div>
 </div>
 <!-- ./top banner -->
+<?php if ( ! empty ( $hotPicks ) ) : ?>
 <!-- Hot deals -->
 <div class="hot-deals-row">
     <div class="container">
@@ -96,6 +97,7 @@
     </div>
 </div>
 <!-- ./Hot deals -->
+<?php endif; ?>
 
 <div class="box-products fashion">
     <div class="container">

@@ -2,24 +2,25 @@
 
 namespace App\Models;
 
-use App\Traits;
-
 Class Cart extends \Zewa\Model
 {
-    use Traits\RemoteTrait;
-    
+    private $rewards;
+
     public function __construct()
     {
         parent::__construct();
-        $this->remoteUri = 'user';
+
+        $endpoint = 'http://google.alldigitalrewards.com';
+        $apiUser = 'alldigitalrewards';
+        $apiKey = '6e68b012d3bc897df484300926b976';
+
+        $this->rewards = new \ADR\Rewards($endpoint, $apiUser, $apiKey);
     }
-    
+
+
     public function create($uniqueId) 
     {
-        return $this->request([
-            'rewards' => []
-            ],'post', $uniqueId.'/cart'
-        );
+        return json_decode($this->rewards->createUserCart($uniqueId, []));
     }
 
     public function fetchById($uniqueId, $cartId)
