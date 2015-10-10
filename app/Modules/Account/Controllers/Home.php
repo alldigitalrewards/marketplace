@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Module\Account\Controllers;
+namespace App\Modules\Account\Controllers;
 
 use Zewa\View;
 use App\Models;
@@ -18,7 +18,7 @@ Class Home extends \Zewa\Controller {
         $this->data = [];
         $this->merch = new Models\Merchandise();
         $this->permission = $this->request->session('user') ? 1 : 0;
-        $this->data['feedUrl'] = \Zewa\Load::getInstance()->config('api','api')->feed_url;
+        $this->data['feedUrl'] = $this->configuration->api->feed_url;
         $this->data['categories'] = $this->merch->fetchCategoriesAndProducts();
         $this->data['search'] = $this->request->get('q','');
         $this->data['isLoggedIn'] = $this->permission;

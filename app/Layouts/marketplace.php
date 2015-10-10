@@ -20,7 +20,7 @@
     <?=$this->fetchCSS()?>
     <title>Marketplace</title>
 </head>
-<body class="<?=$this->isHome ? 'home ' : ''?>option7">
+<body class="<?=$this->baseURL() === $this->currentURL() ? 'home ' : ''?>option7">
 <!-- HEADER -->
 <div id="header" class="header">
     <div class="top-header">
@@ -35,53 +35,7 @@
                 <a href="#"><i class="fa fa-google-plus"></i></a>
             </div>
             <?php if($isLoggedIn): ?>
-            <div class="bolock-cart-topbar" id="cart-block">
-                <!--
-                <a title="My cart" href="#">Cart<span class="count">2</span></a>
-                <div class="cart-block">
-                        <div class="cart-block-content">
-                            <h5 class="cart-title">2 Items in my cart</h5>
-                            <div class="cart-block-list">
-                                <ul>
-                                <li class="product-info">
-                                    <div class="p-left">
-                                        <a href="#" class="remove_link"></a>
-                                        <a href="#">
-                                        <img class="img-responsive" src="http://www.placehold.it/80x80" alt="p10">
-                                        </a>
-                                    </div>
-                                    <div class="p-right">
-                                        <p class="p-name">Donec Ac Tempus</p>
-                                        <p class="p-rice"><i class="fa fa-tag"></i> 40,000</p>
-                                        <p>Qty: 1</p>
-                                    </div>
-                                </li>
-                                <li class="product-info">
-                                    <div class="p-left">
-                                        <a href="#" class="remove_link"></a>
-                                        <a href="#">
-                                        <img class="img-responsive" src="http://www.placehold.it/80x80" alt="p10">
-                                        </a>
-                                    </div>
-                                    <div class="p-right">
-                                        <p class="p-name">Donec Ac Tempus</p>
-                                        <p class="p-rice"><i class="fa fa-tag"></i> 20,000</p>
-                                        <p>Qty: 1</p>
-                                    </div>
-                                </li>
-                            </ul>
-                            </div>
-                            <div class="toal-cart">
-                                <span>Total</span>
-                                <span class="toal-price pull-right"><i class="fa fa-tag"></i> 40,000</span>
-                            </div>
-                            <div class="cart-buttons">
-                                <a href="<?=$this->baseURL('merchandise/cart/review')?>" class="btn-check-out">Checkout</a>
-                            </div>
-                        </div>
-                </div>
-                -->
-            </div>
+            <div class="bolock-cart-topbar" id="cart-block"></div>
             <?php endif; ?>
             <div id="user-info-top" class="user-info pull-right">
                 <?php if($isLoggedIn): ?>
@@ -90,8 +44,6 @@
                     <ul class="dropdown-menu mega_dropdown" role="menu">
                         <li><a href="<?=$this->baseURL('account/home');?>">Settings</a></li>
                         <li><a href="<?=$this->baseURL('account/home/logout');?>">Logout</a></li>
-                        <!--<li><a href="<?=$this->baseURL('merchandise/product/wishlist');?>">Wishlists</a></li>-->
-                        <!--<li><a href="<?=$this->baseURL('merchandise/product/compare');?>">Compare</a></li>-->
                     </ul>
                 </div>
                 <?php else: ?>
@@ -121,62 +73,6 @@
                                 <ul class="nav navbar-nav">
                                     <li class="active"><a href="<?=$this->baseUrl('merchandise')?>">Merchandise</a></li>
                                     <li class=""><a href="<?=$this->baseUrl('redemption')?>">Redemption</a></li>
-                                    <!--<li class="dropdown">
-                                        <a href="category.html" class="dropdown-toggle" data-toggle="dropdown">Games</a>
-                                        <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 830px;">
-                                            <li class="block-container col-sm-4">
-                                                <ul class="block">
-                                                    <li class="img_container">
-                                                        <a href="#">
-                                                            <img class="img-responsive" src="<?=$this->baseURL('resources/app/data/men.png');?>" alt="sport">
-                                                        </a>
-                                                    </li>
-                                                    <li class="link_container group_header">
-                                                        <a href="#">MEN'S</a>
-                                                    </li>
-                                                    <li class="link_container"><a href="#">Skirts</a></li>
-                                                    <li class="link_container"><a href="#">Jackets</a></li>
-                                                    <li class="link_container"><a href="#">Tops</a></li>
-                                                    <li class="link_container"><a href="#">Scarves</a></li>
-                                                    <li class="link_container"><a href="#">Pants</a></li>
-                                                </ul>
-                                            </li>
-                                             <li class="block-container col-sm-4">
-                                                <ul class="block">
-                                                    <li class="img_container">
-                                                        <a href="#">
-                                                            <img class="img-responsive" src="<?=$this->baseURL('resources/app/data/women.png');?>" alt="sport">
-                                                        </a>
-                                                    </li>
-                                                    <li class="link_container group_header">
-                                                        <a href="#">WOMEN'S</a>
-                                                    </li>
-                                                    <li class="link_container"><a href="#">Skirts</a></li>
-                                                    <li class="link_container"><a href="#">Jackets</a></li>
-                                                    <li class="link_container"><a href="#">Tops</a></li>
-                                                    <li class="link_container"><a href="#">Scarves</a></li>
-                                                    <li class="link_container"><a href="#">Pants</a></li>
-                                                </ul>
-                                            </li>
-                                             <li class="block-container col-sm-4">
-                                                <ul class="block">
-                                                    <li class="img_container">
-                                                        <a href="#">
-                                                            <img class="img-responsive" src="<?=$this->baseURL('resources/app/data/kid.png');?>" alt="sport">
-                                                        </a>
-                                                    </li>
-                                                    <li class="link_container group_header">
-                                                        <a href="#">Kids</a>
-                                                    </li>
-                                                    <li class="link_container"><a href="#">Shoes</a></li>
-                                                    <li class="link_container"><a href="#">Clothing</a></li>
-                                                    <li class="link_container"><a href="#">Tops</a></li>
-                                                    <li class="link_container"><a href="#">Scarves</a></li>
-                                                    <li class="link_container"><a href="#">Accessories</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>-->
                                 </ul>
                             </div><!--/.nav-collapse -->
                         </div>
@@ -426,7 +322,7 @@
                      <div class="row">
                          <div class="col-sm-12">
                              <div class="footer-coppyright">
-                                 Copyright © 2015 KuteShop. All Rights Reserved. Designed by: KuteThemes
+                                 Copyright &copy; <?=date('Y');?> All Digital Rewards. All Rights Reserved.
                              </div>
 
                          </div>
