@@ -15,7 +15,7 @@ Class Product extends \Zewa\Controller {
         parent::__construct();
         $this->data = [];
         $this->merch = new Models\Merchandise();
-        $this->data['feedUrl'] = \Zewa\Load::getInstance()->config('api','api')->feed_url;
+        $this->data['feedUrl'] = $this->configuration->api->feed_url;
         $this->permission = $this->request->session('user') ? 1 : 0;
         $this->data['isLoggedIn'] = $this->permission;
     }

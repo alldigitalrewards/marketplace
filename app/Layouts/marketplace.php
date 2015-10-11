@@ -20,7 +20,7 @@
     <?=$this->fetchCSS()?>
     <title>Marketplace</title>
 </head>
-<body class="<?=$this->baseURL() === $this->currentURL() ? 'home ' : ''?>option7">
+<body class="<?=$this->baseURL() == $this->currentURL() ? 'home ' : ''?>option7">
 <!-- HEADER -->
 <div id="header" class="header">
     <div class="top-header">
