@@ -13,7 +13,7 @@ $this->addJS([
      data-paginate-touchy="400"
      data-paginate-query-prefix="product"
      data-paginate-per-page="9"
-     data-paginate-url="<?=$this->baseURL('merchandise/ajax/searchProducts');?>">
+     data-paginate-url="<?=$this->baseURL('merchandise/ajax/searchRewards');?>">
         <div class="paginated-search group-border-dashed">
         <input type="hidden" name="productTitle" value="<?=$search?>">
         

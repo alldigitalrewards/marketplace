@@ -40,21 +40,24 @@ Class Merchandise extends \Zewa\Model
     {
         $categories = $this->fetchCategories();
 
-        if (!empty($categories)) {
-            
-            foreach($categories as $key => $category) {
-                
-                if ($category->active == 'no') {
-                    unset($categories[$key]);
+        $categoryIds = array_map(function($category) {
+            return $category->id;
+        }, $categories);
+
+        $rewards = $this->fetchRewards($page, $perPage, ['categoryIds' => $categoryIds]);
+
+        foreach($categories as $key => $category) {
+
+            foreach($rewards as $reward) {
+                if($reward->category_id !== $category->id) {
                     continue;
                 }
 
-                $categories[$key]->products = $this->fetchRewards($page, $perPage, ['categoryId' => $category->id]);
-                
+                $categories[$key]->rewards[] = $reward;
             }
-            
+
         }
-        
+
         return ! empty ( $categories ) ? $categories : false;
     }
     

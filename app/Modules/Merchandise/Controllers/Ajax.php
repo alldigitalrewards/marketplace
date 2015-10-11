@@ -22,7 +22,7 @@ Class Ajax extends \Zewa\Controller {
         $this->user = new Models\User();
         $this->hasPermission = $this->request->session('user');
         $this->permission = $this->request->session('user') ? 1 : 0;
-        $this->data['feedUrl'] = \Zewa\Load::getInstance()->config('api','api')->feed_url;
+        $this->data['feedUrl'] = $this->configuration->api->feed_url;
     }
     
     public function fetchCartReview($json = true) 
@@ -196,28 +196,28 @@ Class Ajax extends \Zewa\Controller {
         ]);
     }
     
-    public function searchProducts()
+    public function searchRewards()
     {
         $merch = new Models\Merchandise();
-        $page = $this->request->get('productPage');
-        $offset = $this->request->get('productOffset');
+        $page = $this->request->get('rewardPage');
+        $offset = $this->request->get('rewardOffset');
         
-        $settings = [
-            'title' => $this->request->get('productTitle'),
+        $filters = [
+            'title' => $this->request->get('rewardTitle'),
             'priceMin' => $this->request->get('priceMin'),
             'priceMax' => $this->request->get('priceMax')
         ];
         
         $categoryIds = $this->request->get('categoryIds');
+
         if ($categoryIds) {
             $settings['categoryIds'] = array_values((array)$categoryIds);
         }
         
-        $this->data['products'] = $merch->fetchProducts($page, $offset, $settings);
-        $this->data['feedUrl'] = \Zewa\Load::getInstance()->config('api','api')->feed_url;
-        
+        $this->data['rewards'] = $merch->fetchRewards($page, $offset, $filters);
+        $this->data['feedURL'] = $this->configuration->api->feed_url;
         $view = new View();
-        $view->setView('partial/products');
+        $view->setView('partial/rewards');
         $view->setLayout('vanilla');
         $view->setProperty($this->data);
         

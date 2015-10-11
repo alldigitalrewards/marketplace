@@ -65,17 +65,14 @@ Class Product extends \Zewa\Controller {
     
     public function detail($productId = false)
     {
-        $this->data['product'] = $this->merch->fetchProduct($productId);
+        $this->data['product'] = $this->merch->fetchReward($productId);
         
         if (empty($this->data['product'])) {
             die('Oop! Wrong URL');
         }
-        
-        $this->data['product']->related = 
-            $this->merch->fetchProductsByCategoryId(
-                $this->data['product']->category_id
-            );
-        
+
+        $this->data['product']->related = $this->merch->fetchRewards(1, 5, ['categoryId' => $this->data['product']->category_id]);
+
         $view = new View();
         $view->setView('detail');
         $view->setLayout('marketplace');
