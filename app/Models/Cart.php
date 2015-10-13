@@ -10,7 +10,7 @@ Class Cart extends \Zewa\Model
     {
         parent::__construct();
 
-        $endpoint = 'http://google.alldigitalrewards.com';
+        $endpoint = 'http://local.marketplace';
         $apiUser = 'alldigitalrewards';
         $apiKey = '6e68b012d3bc897df484300926b976';
 
@@ -27,16 +27,15 @@ Class Cart extends \Zewa\Model
     {
 
         $response = json_decode($this->rewards->getUserCart($uniqueId, $cartId));
-
         $rewards = [];
         if (!empty($response->products) && is_array($response->products)) {
-            foreach($response->products as &$product) {
-                $product->cart_quantity = count( array_keys( (array)$response->ids, $product->id ));
-                $products[] = $product;
+            foreach($response->products as $key => $product) {
+                $response->products[$key]->cart_quantity = count( array_keys( (array)$response->ids, $product->id ));
+                $rewards[] = $response->products[$key];
             }
         }
-        
-        return ['ids' => (array)$response->ids, 'products' => $rewards];
+
+        return ['ids' => ( ! empty($response->ids) ? (array)$response->ids : [] ), 'rewards' => $rewards];
     }
 
     public function deleteById($uniqueId, $cartId) 

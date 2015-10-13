@@ -55,7 +55,7 @@ $this->addJS([
                         <!-- view-product-list-->
                         <div id="view-product-list" class="view-product-list">
                             <h2 class="page-heading">
-                                <span class="page-heading-title"><?=$search ?: 'Browse'?></span>
+                                <span class="page-heading-title"><?=!empty( $search ) ?: 'Browse'?></span>
                             </h2>
                             <ul class="display-product-option">
                                 <li class="view-as-grid selected">

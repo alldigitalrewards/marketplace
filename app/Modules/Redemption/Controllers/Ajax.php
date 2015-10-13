@@ -19,7 +19,7 @@ Class Ajax extends \Zewa\Controller {
         $this->data = [];
         $this->permission = $this->request->session('user') ? 1 : 0;
         $this->data['isLoggedIn'] = $this->permission;
-        $this->data['feedUrl'] = \Zewa\Load::getInstance()->config('api','api')->feed_url;
+        $this->data['feedUrl'] = $this->configuration->api->feed_url;
     }
     
     public function searchProducts()
@@ -40,14 +40,14 @@ Class Ajax extends \Zewa\Controller {
         
         $redemptionModel = new Models\Redemption;
         $response = $redemptionModel->fetchProductsByPin($redemptionCode, $page, $offset);
-        
-        if ($response !== false) {
-            $this->data['products'] = $response->products;
+
+        if (! empty ( $response ) ) {
+            $this->data['products'] = $response->value;
         } else {
             die('Opps! Wrong page'); 
         }
         
-        $this->data['feedUrl'] = \Zewa\Load::getInstance()->config('api','api')->feed_url;
+        $this->data['feedUrl'] = $this->configuration->api->feed_url;
         
         $view = new View();
         $view->setView('partial/products');
@@ -72,16 +72,16 @@ Class Ajax extends \Zewa\Controller {
         
         $redemptionModel = new Models\Redemption;
         $response = $redemptionModel->fetchProductsByPin($this->request->post('code'));
-        
+//        var_dump($response);die();
         if ($response !== false) {
             
             $redemption = $this->request->session('redemption');
             $redemption['code'] = $this->request->post('code');
-            $redemption['campaign_id'] = $response->campaign_id;
+            $redemption['campaign_id'] = $response->id;
             $redemption = $this->request->setSession('redemption', $redemption);
             
             return json_encode([
-                'redirect' => $this->router->baseUrl('redemption/product/result')
+                'redirect' => $this->router->baseURL('redemption/product/result')
             ]);
             
         }
@@ -108,31 +108,36 @@ Class Ajax extends \Zewa\Controller {
         $user = $this->request->session('user');
         $redemption = $this->request->session('redemption');
         $productId = $redemption['redeemed_product_id'];
-        
-        $merchandiseModel = new Models\Merchandise;
+
         $transactionModel = new Models\Transaction;
         
-        $create = 
-            $transactionModel->create($user['unique_id'], [
+        $create = $transactionModel->create($user['unique_id'], [
                 'shipping_address' => $this->request->post('shipping_address'),
                 'rewards' => [$productId],
                 'redemption' => 1,
                 'campaign_pin' => $redemption['code'],
                 'campaign_id' => $redemption['campaign_id']
             ]);
-                
-        if ($create !== true) {
+
+        if( ! empty ( $create ) ) {
+            if ($create->success !== true) {
+                return json_encode([
+                    'success' => false,
+                    'message' => $create->message
+                ]);
+            }
+
+            $this->request->setSession('redemption', []);
+
             return json_encode([
-                'success' => false,
-                'message' => $create->message
+                'redirect' => $this->router->baseUrl('redemption/checkout/complete/' . $productId)
             ]);
         }
-        
-        $this->request->setSession('redemption', []);
-        
+
         return json_encode([
-            'redirect' => $this->router->baseUrl('redemption/checkout/complete/'.$productId)
-        ]);   
+            'success' => false,
+            'message' => 'Oops, something went wrong. Please try again.'
+        ]);
     }
     
     public function redeem($productId) 
@@ -149,11 +154,11 @@ Class Ajax extends \Zewa\Controller {
         
         $redemptionModel = new Models\Redemption;
         $response = $redemptionModel->fetchProductsByPin($redemption['code']);
-        
-        if ($response !== false) {
-            
+
+        if ( ! empty ( $response ) ) {
+
             $validId = false;
-            foreach($response->products as $product) {
+            foreach($response->value as $product) {
                 if ($product->id == $productId) {
                     $validId = true;
                     break;

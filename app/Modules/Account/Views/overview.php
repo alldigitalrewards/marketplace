@@ -103,10 +103,14 @@
                             <tbody class="paginated-container">
                             </tbody>
                         </table>
-                        
-                        <ul class="pull-right paginated-buttons pagination pagination-lg hide">
-                            <li><a href="#" data-paginate-direction="previous">«</a></li>
-                            <li><a href="#" data-paginate-direction="next">»</a></li>
+
+                        <ul class="pull-right paginated-buttons pagination pagination-sm hide">
+                            <li><a href="javascript:void(0);" data-paginate-direction="previous">&laquo; Previous</a></li>
+                            <li>
+                                <a href="javascript:void(0);" data-paginate-direction="next" aria-label="Next">
+                                    <span aria-hidden="true">Next &raquo;</span>
+                                </a>
+                            </li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>

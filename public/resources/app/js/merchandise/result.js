@@ -23,6 +23,6 @@ $(document).ready(function() {
         $("#priceRangeSlider").slider("values", $this.data("index"), $this.val());
     });
     
-    $('input.sliderValue').keyup();
+    //$('input.sliderValue').keyup();
     
 });

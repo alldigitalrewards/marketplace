@@ -13,7 +13,7 @@ Class User extends \Zewa\Model
     {
         parent::__construct();
 
-        $endpoint = 'http://google.alldigitalrewards.com';
+        $endpoint = 'http://local.marketplace';
         $apiUser = 'alldigitalrewards';
         $apiKey = '6e68b012d3bc897df484300926b976';
 
@@ -112,7 +112,7 @@ Class User extends \Zewa\Model
         }
         
         //Update user on remote server
-        $result = $this->rewards->updateUser($uniqueId, $data);
+        $result = json_decode($this->rewards->updateUser($uniqueId, $data));
 
         return $result->success;
     }
