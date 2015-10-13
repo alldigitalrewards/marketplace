@@ -10,7 +10,7 @@ trait CartTrait
         $cartModel = new Models\Cart;
         $userModel = new Models\User;
         $user = $this->request->session('user');
-        
+
         if (empty($user['cart_id'])) {
             
             $response = $cartModel->create($user['unique_id']);

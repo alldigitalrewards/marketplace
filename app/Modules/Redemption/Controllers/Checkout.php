@@ -15,7 +15,7 @@ Class Checkout extends \Zewa\Controller {
     {
         parent::__construct();
         $this->data = [];
-        $this->data['feedUrl'] = \Zewa\Load::getInstance()->config('api','api')->feed_url;
+        $this->data['feedUrl'] = $this->configuration->api->feed_url;
         $this->permission = $this->request->session('user') ? 1 : 0;
         $this->data['isLoggedIn'] = $this->permission;
     }
@@ -47,7 +47,7 @@ Class Checkout extends \Zewa\Controller {
         }
         
         $merch = new Models\Merchandise();
-        $this->data['product'] = $merch->fetchProduct($productId);
+        $this->data['product'] = $merch->fetchReward($productId);
         
         if (empty($this->data['product'])) {
             die('Oop! Wrong URL');

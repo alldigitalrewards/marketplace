@@ -34,6 +34,7 @@ Class Home extends \Zewa\Controller {
         $userModel = new Models\User;
         $userData = $this->request->session('user');
         $userData = $userModel->fetchUserByUniqueId($userData['unique_id']);
+//        var_dump($userData);die();
         $this->data['user'] = $userData;
         $this->data['stateOptions'] = $this->fetchStateOptions($userData->state);
         $this->data['noTransactions'] = empty($transactionModel->fetchPaginated($userData->unique_id));

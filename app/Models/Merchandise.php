@@ -10,7 +10,7 @@ Class Merchandise extends \Zewa\Model
     {
         parent::__construct();
 
-        $endpoint = 'http://google.alldigitalrewards.com';
+        $endpoint = 'http://local.marketplace';
         $apiUser = 'alldigitalrewards';
         $apiKey = '6e68b012d3bc897df484300926b976';
 

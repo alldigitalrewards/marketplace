@@ -13,7 +13,7 @@ Class Transaction extends \Zewa\Model
     {
         parent::__construct();
 
-        $endpoint = 'http://google.alldigitalrewards.com';
+        $endpoint = 'http://local.marketplace';
         $apiUser = 'alldigitalrewards';
         $apiKey = '6e68b012d3bc897df484300926b976';
 
@@ -27,7 +27,14 @@ Class Transaction extends \Zewa\Model
 
     public function fetchPaginated($uniqueId)
     {
-        return json_decode($this->rewards->getUserTransactions($uniqueId));
+        $transactions = json_decode($this->rewards->getUserTransactions($uniqueId));
+
+        if( isset ( $transactions->success ) && $transactions->success === false ) {
+            return false;
+        } else {
+            return $transactions;
+        }
+
     }
     
 }

@@ -5,7 +5,6 @@
         <tr>
             <th width="14%" class="cart_product">Product</th>
             <th width="40%">Description</th>
-            <th width="14%">Avail.</th>
             <th width="14%">Qty</th>
             <th width="13%">Total</th>
             <th width="5%" class="action"><i class="fa fa-trash-o"></i></th>
@@ -30,9 +29,6 @@
             <td class="cart_description">
                 <p class="product-name"><a href="#"><?=$product->title?></a></p>
                 <p><?=$product->description?></p>
-            </td>
-            <td class="cart_avail">
-                <span class="label label-success"><?=$product->stock === 0 ? 'Out of stock' : 'In stock'?></span>
             </td>
             <td class="qty">
             <form action="<?=$this->baseUrl('merchandise/ajax/updateProductQuantity/'.$product->id)?>" data-item-alias="product-quantity-form" class="request">

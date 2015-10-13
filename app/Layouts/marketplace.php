@@ -71,8 +71,8 @@
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav">
-                                    <li class="active"><a href="<?=$this->baseUrl('merchandise')?>">Merchandise</a></li>
-                                    <li class=""><a href="<?=$this->baseUrl('redemption')?>">Redemption</a></li>
+                                    <li class="active"><a href="<?=$this->baseURL()?>">Merchandise</a></li>
+                                    <li class=""><a href="<?=$this->baseURL('redemption')?>">Redemption</a></li>
                                 </ul>
                             </div><!--/.nav-collapse -->
                         </div>
@@ -139,7 +139,7 @@
                                     <!--<img class="icon-menu" alt="Funky roots" src="<?=$this->baseURL('resources/app/data/'.rand(1,15).'.png');?>">-->
                                     <?=$category->category_name?>
                                 </a>
-                                <?php if(!empty($category->products)): ?>
+                                <?php if(!empty($category->rewards)): ?>
                                 <div class="vertical-dropdown-menu">
                                     <div class="vertical-groups col-sm-12">
                                             <div class="mega-group col-sm-12">
@@ -151,23 +151,22 @@
                                                 <div class="row mega-products">
                                                     
                                                     <?php $o = 0; ?>
-                                                    <?php foreach($category->products as $product): ?>
+                                                    <?php foreach($category->rewards as $reward): ?>
                                                     <?php $o++; ?>
                                                     <?php if ($o > 4) {break;}?>
                                                     <div class="col-sm-3 mega-product">
                                                         <div class="product-avatar">
-                                                            <?php if($product->image_processed): ?>
-                                                            <a href="<?=$this->baseUrl('merchandise/product/detail/'.$product->id)?>"><img src="<?=$feedUrl.$product->image_full;?>" alt="Product"></a>
+                                                            <?php if($reward->image_processed): ?>
+                                                            <a href="<?=$this->baseUrl('merchandise/product/detail/'.$reward->id)?>"><img src="<?=$feedUrl.$reward->image_full;?>" alt="Product"></a>
                                                             <?php else: ?>
-                                                            <a href="<?=$this->baseUrl('merchandise/product/detail/'.$product->id)?>"><img src="<?=$feedUrl.'no-image.jpg'?>" alt="Product"></a>
+                                                            <a href="<?=$this->baseUrl('merchandise/product/detail/'.$reward->id)?>"><img src="<?=$feedUrl.'no-image.jpg'?>" alt="Product"></a>
                                                             <?php endif; ?>
                                                         </div>
                                                         <div class="product-name">
-                                                            <a href="<?=$this->baseUrl('merchandise/product/detail/'.$product->id)?>"><?=substr($product->title,0,23)?></a>
+                                                            <a href="<?=$this->baseUrl('merchandise/product/detail/'.$reward->id)?>"><?=substr($reward->title,0,23)?></a>
                                                         </div>
-                                                        
                                                         <div class="product-price">
-                                                            <i class="fa fa-tag"></i> <?=$product->credit_cost?>
+                                                            <i class="fa fa-tag"></i> <?=$reward->credit_cost?>
                                                         </div>
                                                     </div>
                                                     <?php endforeach; ?>

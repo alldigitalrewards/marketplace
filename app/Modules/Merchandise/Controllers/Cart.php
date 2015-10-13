@@ -17,7 +17,7 @@ Class Cart extends \Zewa\Controller {
         $this->data = [];
         $this->merch = new Models\Merchandise();
         $this->permission = $this->request->session('user') ? 1 : 0;
-        $this->data['feedUrl'] = \Zewa\Load::getInstance()->config('api','api')->feed_url;
+        $this->data['feedUrl'] = $this->configuration->api->feed_url;
         $this->data['categories'] = $this->merch->fetchCategoriesAndProducts();
         $this->data['search'] = $this->request->get('q','');
         $this->data['isLoggedIn'] = $this->permission;
@@ -67,16 +67,13 @@ Class Cart extends \Zewa\Controller {
         }
         
         $userData = $this->request->session('user');
-        $product = $this->merch->fetchProduct($userData['unique_id'], $productId);
+        $product = $this->merch->fetchReward($productId);
         
         if (empty($product)) {
             die('Oop! Wrong URL');
         }
         
-        $this->data['relatedProducts'] = 
-            $this->merch->fetchProductsByCategoryId(
-                $product->category_id
-            );
+        $this->data['relatedProducts'] = $this->merch->fetchRewards(1, 5, ['categoryId' => $product->category_id]);
         
         $view = new View();
         $view->setView('cart/complete');

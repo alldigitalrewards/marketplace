@@ -34,7 +34,7 @@ Class Ajax extends \Zewa\Controller {
         $user = $this->request->session('user');
         $cartId = $user['cart_id'];
         $cart = $this->cart->fetchById($user['unique_id'], $cartId);
-        $this->data['cartItems'] = $cart['products'];
+        $this->data['cartItems'] = $cart['rewards'];
         
         $view = new View();
         $view->setProperty($this->data);
@@ -59,7 +59,7 @@ Class Ajax extends \Zewa\Controller {
         $cart = $this->cart->fetchById($user['unique_id'], $cartId);
         $remoteUser = $this->user->fetchUserByUniqueId($user['unique_id']);
         $this->data['userCredits'] = $remoteUser->credit;
-        $this->data['cartItems'] = $cart['products'];
+        $this->data['cartItems'] = $cart['rewards'];
         
         $view = new View();
         $view->setProperty($this->data);
@@ -83,9 +83,10 @@ Class Ajax extends \Zewa\Controller {
             ]);
             
         }
-        
+
         $user = $this->request->session('user');
         $cartId = $this->createUserCartIfNone();
+
         $cart = $this->cart->fetchById($user['unique_id'], $cartId);
         $ids = $cart['ids'];
         
@@ -93,18 +94,18 @@ Class Ajax extends \Zewa\Controller {
         if (array_search($productId,$ids)) {
             $counts = array_count_values($ids);
             $newQuantity = $counts[$productId] + 1;
-            return $this->updateProductQuantity($productId,$newQuantity);
+            return $this->updateProductQuantity($productId, $newQuantity);
         }
         
         //Add prize to cart
         $ids[] = $productId;
-        $this->cart->updateById($user['unique_id'], $cartId,$ids);
+        $this->cart->updateById($user['unique_id'], $cartId, $ids);
         $cart = $this->cart->fetchById($user['unique_id'], $cartId);
-        
+
         return json_encode([
             'success' => true,
             'message' => 'Item was added to cart!',
-            'products' => json_encode($cart->products),
+            'products' => json_encode($cart['rewards']),
             'cartPreview' => $this->fetchCartPreview(0)
         ]);
     }
@@ -269,8 +270,8 @@ Class Ajax extends \Zewa\Controller {
                 'shipping_address' => $this->request->post('shipping_address'),
                 'rewards' => $ids
             ]);
-                
-        if ($create !== true) {
+
+        if ($create->success !== true) {
             return json_encode([
                 'success' => false,
                 'message' => $create->message

@@ -145,12 +145,8 @@ Class Ajax extends \Zewa\Controller {
         $view = new View;
         $user = $this->request->session('user');
         $transactionModel = new Models\Transaction;
-        $this->data['transactions'] = $transactionModel->fetchPaginated(
-            $user['unique_id'],
-            $this->request->get('page'),
-            $this->request->get('offset'),
-            $this->request->get('type', 'all')
-        );
+        $this->data['transactions'] = $transactionModel->fetchPaginated( $user['unique_id'] );
+
         $view->setProperty($this->data);
         $view->setLayout('vanilla');
         $view->setView('partial/transactions');
