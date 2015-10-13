@@ -2,7 +2,7 @@ $(document).ready(function() {
    
    $('#product-search-bar').keyup(function() {
         $('input[name=productTitle]').val($(this).val());
-        iim.paginator.refresh('product-listing');
+        zewa.paginator.refresh('product-listing');
     });
     
     $("#priceRangeSlider").slider({
@@ -14,7 +14,7 @@ $(document).ready(function() {
             for (var i = 0; i < ui.values.length; ++i) {
                 $("input.sliderValue[data-index=" + i + "]").val(ui.values[i]);
             }
-            iim.paginator.refresh('product-listing');
+            zewa.paginator.refresh('product-listing');
         }
     });
     

@@ -3,6 +3,7 @@
 .config
 .bash_history
 .cache
+
 # Logs
 access.log
 error.log
@@ -14,6 +15,7 @@ build/pdepend/
 #ws: Composer Sourced Files
 composer.lock
 vendor/
+.composer/
 
 # Bower resources
 /public/resources/*

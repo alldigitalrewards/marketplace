@@ -11,11 +11,11 @@ $this->addJS([
      data-paginate-type="traditional"
      data-paginate-container=""
      data-paginate-touchy="400"
-     data-paginate-query-prefix="product"
+     data-paginate-query-prefix="reward"
      data-paginate-per-page="9"
      data-paginate-url="<?=$this->baseURL('merchandise/ajax/searchRewards');?>">
         <div class="paginated-search group-border-dashed">
-        <input type="hidden" name="productTitle" value="<?=$search?>">
+        <input type="hidden" name="rewardTitle" value="<?=$search?>">
         
         <div class="columns-container">
             <div class="container" id="columns">

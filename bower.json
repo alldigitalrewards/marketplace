@@ -25,6 +25,7 @@
     "owl.carousel": "~2.0.0-beta.3",
     "fancybox": "~2.1.5",
     "elevatezoom": "~2.2.3",
-    "jquery.gritter": "~1.7.4"
+    "jquery.gritter": "~1.7.4",
+    "zewa-paginator": "~1.0.1"
   }
 }

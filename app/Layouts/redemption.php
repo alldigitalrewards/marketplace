@@ -25,9 +25,6 @@
 <div id="header" class="header">
     <div class="top-header">
         <div class="container">
-            <!--<div class="nav-top-links">
-                <a class="first-item" href="#">Welcome to KuteShop</a>
-            </div>-->
             <div class="top-bar-social">
                 <a href="#"><i class="fa fa-facebook"></i></a>
                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -71,62 +68,6 @@
                                 <ul class="nav navbar-nav">
                                     <li class=""><a href="<?=$this->baseUrl('merchandise')?>">Merchandise</a></li>
                                     <li class="active"><a href="<?=$this->baseUrl('redemption')?>">Redemption</a></li>
-                                    <!--<li class="dropdown">
-                                        <a href="category.html" class="dropdown-toggle" data-toggle="dropdown">Games</a>
-                                        <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 830px;">
-                                            <li class="block-container col-sm-4">
-                                                <ul class="block">
-                                                    <li class="img_container">
-                                                        <a href="#">
-                                                            <img class="img-responsive" src="<?=$this->baseURL('resources/app/data/men.png');?>" alt="sport">
-                                                        </a>
-                                                    </li>
-                                                    <li class="link_container group_header">
-                                                        <a href="#">MEN'S</a>
-                                                    </li>
-                                                    <li class="link_container"><a href="#">Skirts</a></li>
-                                                    <li class="link_container"><a href="#">Jackets</a></li>
-                                                    <li class="link_container"><a href="#">Tops</a></li>
-                                                    <li class="link_container"><a href="#">Scarves</a></li>
-                                                    <li class="link_container"><a href="#">Pants</a></li>
-                                                </ul>
-                                            </li>
-                                             <li class="block-container col-sm-4">
-                                                <ul class="block">
-                                                    <li class="img_container">
-                                                        <a href="#">
-                                                            <img class="img-responsive" src="<?=$this->baseURL('resources/app/data/women.png');?>" alt="sport">
-                                                        </a>
-                                                    </li>
-                                                    <li class="link_container group_header">
-                                                        <a href="#">WOMEN'S</a>
-                                                    </li>
-                                                    <li class="link_container"><a href="#">Skirts</a></li>
-                                                    <li class="link_container"><a href="#">Jackets</a></li>
-                                                    <li class="link_container"><a href="#">Tops</a></li>
-                                                    <li class="link_container"><a href="#">Scarves</a></li>
-                                                    <li class="link_container"><a href="#">Pants</a></li>
-                                                </ul>
-                                            </li>
-                                             <li class="block-container col-sm-4">
-                                                <ul class="block">
-                                                    <li class="img_container">
-                                                        <a href="#">
-                                                            <img class="img-responsive" src="<?=$this->baseURL('resources/app/data/kid.png');?>" alt="sport">
-                                                        </a>
-                                                    </li>
-                                                    <li class="link_container group_header">
-                                                        <a href="#">Kids</a>
-                                                    </li>
-                                                    <li class="link_container"><a href="#">Shoes</a></li>
-                                                    <li class="link_container"><a href="#">Clothing</a></li>
-                                                    <li class="link_container"><a href="#">Tops</a></li>
-                                                    <li class="link_container"><a href="#">Scarves</a></li>
-                                                    <li class="link_container"><a href="#">Accessories</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>-->
                                 </ul>
                             </div><!--/.nav-collapse -->
                         </div>
@@ -180,10 +121,9 @@
                              <h3 class="widget-title">Infomation</h3>
                              <div class="widget-body">
                                  <ul>
-                                     <li><a class="location" href="#"><span class="address">Address:</span>2046 Blue Spruce Lane Laurel, tetxac, Orton Tolanto, Canada</a></li>
-                                     <li><a class="phone" href="#"><span>Phone:</span>0200 410-369-3920</a></li>
                                      <li><a class="mobile" href="#"><span>Hotline:</span> 090 999 8686</a></li>
-                                     <li><a class="email" href="#"><span>Email:</span>nfo@kutethemes.com</a></li>
+                                     <li><a class="phone" href="#"><span>Phone:</span> 866-551-5794</a></li>
+                                     <li><a class="email" href="#"><span>Email:</span>support@alldigitalrewards.com</a></li>
                                  </ul>
                              </div>
                          </div>
@@ -261,7 +201,7 @@
                      <div class="row">
                          <div class="col-sm-12">
                              <div class="footer-coppyright">
-                                 Copyright © 2015 KuteShop. All Rights Reserved. Designed by: KuteThemes
+                                 Copyright &copy; <?=date('Y');?> All Digital Rewards. All Rights Reserved.
                              </div>
 
                          </div>
@@ -291,7 +231,7 @@
 
 <!--Paginator-->
 <script type="text/javascript" src="<?=$this->baseURL('resources/querystring.js');?>"></script>
-<script type="text/javascript" src="<?=$this->baseURL('resources/paginator.js');?>"></script>
+<script type="text/javascript" src="<?=$this->baseURL('resources/zewa-paginator/paginator.js');?>"></script>
 <!--./Paginator-->
 
 <!--Request-->

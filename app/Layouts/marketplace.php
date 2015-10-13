@@ -25,9 +25,6 @@
 <div id="header" class="header">
     <div class="top-header">
         <div class="container">
-            <!--<div class="nav-top-links">
-                <a class="first-item" href="#">Welcome to KuteShop</a>
-            </div>-->
             <div class="top-bar-social">
                 <a href="#"><i class="fa fa-facebook"></i></a>
                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -58,7 +55,7 @@
         <div class="container main-header">
             <div class="row">
                 <div class="col-xs-12 col-sm-3 logo">
-                    <a href="<?=$this->baseURL();?>"><img alt="Kute Shop" src="<?=$this->baseURL('resources/app/images/logo.png');?>" /></a>
+                    <a href="<?=$this->baseURL();?>"><img alt="All Digital Rewards" src="<?=$this->baseURL('resources/app/images/logo.png');?>" /></a>
                 </div>
                 <div id="main-menu" class="col-sm-12 col-md-9 main-menu">
                     <nav class="navbar navbar-default">
@@ -240,10 +237,9 @@
                              <h3 class="widget-title">Infomation</h3>
                              <div class="widget-body">
                                  <ul>
-                                     <li><a class="location" href="#"><span class="address">Address:</span>2046 Blue Spruce Lane Laurel, tetxac, Orton Tolanto, Canada</a></li>
-                                     <li><a class="phone" href="#"><span>Phone:</span>0200 410-369-3920</a></li>
-                                     <li><a class="mobile" href="#"><span>Hotline:</span> 090 999 8686</a></li>
-                                     <li><a class="email" href="#"><span>Email:</span>nfo@kutethemes.com</a></li>
+                                     <li><a class="location" href="#"><span class="address">Address:</span>349 Lake Havasu Ave South Suite 104</a></li>
+                                     <li><a class="phone" href="#"><span>Phone:</span> 866-551-5794</a></li>
+                                     <li><a class="email" href="#"><span>Email:</span>support@alldigitalrewards.com</a></li>
                                  </ul>
                              </div>
                          </div>
@@ -356,7 +352,7 @@
 
 <!--Paginator-->
 <script type="text/javascript" src="<?=$this->baseURL('resources/querystring.js');?>"></script>
-<script type="text/javascript" src="<?=$this->baseURL('resources/paginator.js');?>"></script>
+<script type="text/javascript" src="<?=$this->baseURL('resources/zewa-paginator/paginator.js');?>"></script>
 <!--./Paginator-->
 
 <!--Request-->

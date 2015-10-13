@@ -88,32 +88,29 @@
                      data-paginate-touchy="400"
                      data-paginate-query-prefix="transaction"
                      data-paginate-url="<?=$this->baseURL('account/ajax/fetchTransactions');?>">
-            
-                    <div class="paginated-search group-border-dashed">
-                        
-                        <table class="table hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Process Date</th>
-                                    <th>Credits</th>
-                                    <th>Type</th>
-                                </tr>
-                            </thead>
-                            <tbody class="paginated-container">
-                            </tbody>
-                        </table>
 
-                        <ul class="pull-right paginated-buttons pagination pagination-sm hide">
-                            <li><a href="javascript:void(0);" data-paginate-direction="previous">&laquo; Previous</a></li>
-                            <li>
-                                <a href="javascript:void(0);" data-paginate-direction="next" aria-label="Next">
-                                    <span aria-hidden="true">Next &raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
+                    <table class="table hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Process Date</th>
+                                <th>Credits</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody class="paginated-container">
+                        </tbody>
+                    </table>
+
+                    <ul class="pull-right paginated-buttons pagination pagination-sm hide">
+                        <li><a href="javascript:void(0);" data-paginate-direction="previous">&laquo; Previous</a></li>
+                        <li>
+                            <a href="javascript:void(0);" data-paginate-direction="next" aria-label="Next">
+                                <span aria-hidden="true">Next &raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
                     
                 </div>
             </div>
