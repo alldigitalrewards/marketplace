@@ -10,9 +10,9 @@ Class Base extends \Zewa\Model
     {
         parent::__construct();
 
-        $endpoint = 'http://local.marketplace';
-        $apiUser = 'alldigitalrewards';
-        $apiKey = '6e68b012d3bc897df484300926b976';
+        $endpoint = $this->configuration->api->host;
+        $apiUser = $this->configuration->api->alias;
+        $apiKey = $this->configuration->api->key;
 
         $this->rewards = new \ADR\Rewards($endpoint, $apiUser, $apiKey);
     }
