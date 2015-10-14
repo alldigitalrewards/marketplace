@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait InputHelper {
 
-    function fetchStateOptions($selected) 
+    function fetchStateOptions($selected = false)
     {
         $html = '<option value="">State</option>';
         $states = [
@@ -62,7 +62,11 @@ trait InputHelper {
          ];
     
        foreach ($states as $s) {
-          $html .= '<option '.($selected == $s[0] ? 'selected ' : '').'value="' . $s[0] . '">' . $s[1] . "</option>\n";
+            if($selected !== false) {
+                 $html .= '<option '.($selected == $s[0] ? 'selected ' : '').'value="' . $s[0] . '">' . $s[1] . "</option>\n";
+            } else {
+                 $html .= '<option value="' . $s[0] . '">' . $s[1] . "</option>\n";
+            }
        }
        
        return $html;

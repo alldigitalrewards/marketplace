@@ -28,11 +28,13 @@ trait CartTrait
         return $cartId;
     }
     
-    public function fetchCartTotal() 
+    public function fetchCartTotal($cart = false)
     {
         $user = $this->request->session('user');
-        $cartId = $user['cart_id'];
-        $cart = $this->cart->fetchById($user['unique_id'], $cartId);
+        if( $cart === false ) {
+            $cartId = $user['cart_id'];
+            $cart = $this->cart->fetchById($user['unique_id'], $cartId);
+        }
         $total = 0.00;
         
         if(!empty($cart['products'])) {

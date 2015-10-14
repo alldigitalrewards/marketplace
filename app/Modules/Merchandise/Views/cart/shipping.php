@@ -26,7 +26,7 @@
                             <div class="col-lg-6">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="shipping_address[firstname]" value="<?=$user->shipping_address->firstname?>" placeholder="First Name">
+                                        <input type="text" class="form-control" name="shipping_address[firstname]" value="<?=( ! empty ( $user->shipping_address->firstname ) ? $user->shipping_address->firstname:'') ?>" placeholder="First Name">
                                     </div>
                                 </div>
                             </div>
@@ -34,7 +34,7 @@
                             <div class="col-lg-6">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="shipping_address[lastname]" value="<?=$user->shipping_address->lastname?>" placeholder="Last Name">
+                                        <input type="text" class="form-control" name="shipping_address[lastname]" value="<?=( ! empty ( $user->shipping_address->lastname ) ? $user->shipping_address->lastname:'') ?>" placeholder="Last Name">
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                             <div class="col-xs-12 col-md-6">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="shipping_address[city]" value="<?=$user->shipping_address->city?>" placeholder="City">
+                                        <input type="text" class="form-control" name="shipping_address[city]" value="<?=( ! empty ( $user->shipping_address->city ) ? $user->shipping_address->city:'') ?>" placeholder="City">
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                             <div class="col-xs-12 col-md-6">
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="text" class="form-control" name="shipping_address[zip]" placeholder="Post Code" value="<?=$user->shipping_address->zip?>">
+                                        <input type="text" class="form-control" name="shipping_address[zip]" placeholder="Post Code" value="<?=( ! empty ( $user->shipping_address->zip ) ? $user->shipping_address->zip:'') ?>">
                                     </div>
                                 </div>
                             </div>
@@ -78,14 +78,14 @@
                                     <div class="col-xs-6">
                                         <div class="control-group">
                                             <div class="controls">
-                                                <input type="text" class="form-control" name="shipping_address[address]" placeholder="Address 1" value="<?=$user->shipping_address->address?>">
+                                                <input type="text" class="form-control" name="shipping_address[address]" placeholder="Address 1" value="<?=( ! empty ( $user->shipping_address->address ) ? $user->shipping_address->address:'') ?>">
                                             </div>
                                         </div>  
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="control-group">
                                             <div class="controls">
-                                                <input type="text" class="form-control" name="shipping_address[secondary_address]" placeholder="Address 2 (optional)" value="<?=$user->shipping_address->address?>">
+                                                <input type="text" class="form-control" name="shipping_address[secondary_address]" placeholder="Address 2 (optional)" value="<?=( ! empty ( $user->shipping_address->address ) ? $user->shipping_address->address:'') ?>">
                                             </div>
                                         </div>  
                                     </div>

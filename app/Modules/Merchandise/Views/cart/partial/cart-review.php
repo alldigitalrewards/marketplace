@@ -34,8 +34,6 @@
             <form action="<?=$this->baseUrl('merchandise/ajax/updateProductQuantity/'.$product->id)?>" data-item-alias="product-quantity-form" class="request">
                 <input class="product-quantity-input form-control" type="text" name="quantity" value="<?=$product->cart_quantity?>">
             </form>
-                <!--<a href="#"><i class="fa fa-caret-up"></i></a>-->
-                <!--<a href="#"><i class="fa fa-caret-down"></i></a>-->
             </td>
             <td class="price">
                 <span><i class="fa fa-tag"></i> <?=$quantityTotal?></span>
@@ -50,7 +48,6 @@
     <tfoot>
         <tr>
             <td colspan="5"><strong><i class="fa fa-tag"></i> <?=$total?></strong></td>
-            <td colspan="1"></td>
         </tr>
     </tfoot>    
     </table>

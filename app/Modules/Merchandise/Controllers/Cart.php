@@ -36,7 +36,13 @@ Class Cart extends \Zewa\Controller {
         }
         
         $this->data['emptyCart'] = empty($cartItemIds);
-        
+
+        $this->data['shipping_required'] = false;
+        foreach($cart['rewards'] as $c) {
+            if($c->type === 'physical') {
+                $this->data['shipping_required'] = true;
+            }
+        }
         $view = new View();
         $view->setView('cart/review');
         $view->setLayout('marketplace');
@@ -49,10 +55,16 @@ Class Cart extends \Zewa\Controller {
         $userModel = new Models\User();
         $userData = $this->request->session('user');
         $userData = $userModel->fetchUserByUniqueId($userData['unique_id']);
-        
         $this->data['user'] = $userData;
-        $this->data['stateOptions'] = $this->fetchStateOptions($userData->shipping_address->state);
-        
+
+        if( ! empty ( $userData->shipping_address->state ) ) {
+            $state = $userData->shipping_address->state;
+        } else {
+            $state = false;
+        }
+
+        $this->data['stateOptions'] = $this->fetchStateOptions($state);
+
         $view = new View();
         $view->setView('cart/shipping');
         $view->setLayout('marketplace');
