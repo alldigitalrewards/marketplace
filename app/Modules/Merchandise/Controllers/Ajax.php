@@ -210,9 +210,8 @@ Class Ajax extends \Zewa\Controller {
         ];
         
         $categoryIds = $this->request->get('categoryIds');
-
         if ($categoryIds) {
-            $settings['categoryIds'] = array_values((array)$categoryIds);
+            $filters['categoryIds'] = array_values((array)$categoryIds);
         }
         
         $this->data['rewards'] = $merch->fetchRewards($page, $offset, $filters);

@@ -3,6 +3,7 @@
 .config
 .bash_history
 .cache
+.viminfo
 
 # Logs
 access.log

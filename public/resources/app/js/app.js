@@ -1,5 +1,10 @@
 !function($,doc) {
-    
+    $.extend($.gritter.options, {
+        position: 'bottom-left', // defaults to 'top-right' but can be 'bottom-left', 'bottom-right', 'top-left', 'top-right' (added in 1.7.1)
+        fade_in_speed: 'medium', // how fast notifications fade in (string or int)
+        fade_out_speed: 2000, // how fast the notices fade out
+        time: 6000 // hang on the screen for...
+    });
     iim.request.defaults({
         callback: function (response) {
             
@@ -17,7 +22,8 @@
                 
                 $.gritter.add({
                     title: title,
-                    text: response.message
+                    text: response.message,
+                    position: 'bottom-right'
                 });
                 
             }
@@ -39,7 +45,8 @@
                 $.each(response.validation, function(key,message) {
                     $.gritter.add({
                         title: 'Invalid Field',
-                        text: message
+                        text: message,
+                        position: 'bottom-right'
                     }); 
                 });
             }
