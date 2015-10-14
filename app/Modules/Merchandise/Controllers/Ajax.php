@@ -232,31 +232,39 @@ Class Ajax extends \Zewa\Controller {
             'success' => false,
             'message' => 'Please add items to your cart before checking out'
         ]);
-        
-        $remoteUser = $this->user->fetchUserByUniqueId($user['unique_id']);
-        $cartTotal = $this->fetchCartTotal();
-        
-        if (bcsub($remoteUser->credit,$cartTotal,2) <= 0) {
-            return json_encode([
-                'success' => false,
-                'message' => 'You do not have enough credit to checkout'
-            ]);
-        }
-        
-        if (!$this->request->post('on_file_address')) {
-            if (!$this->validateAddress($this->request->post('shipping_address'))) {
-                return json_encode([
-                    'success' => false,
-                    'message' => $this->fetchValidationError()
-                ]);
-            }   
-        }
+
         
         if (empty($user['cart_id'])) {
             return $emptyCartError;
         } else {
-            $cartModel = new Models\Cart();
-            $cart = $cartModel->fetchById($user['unique_id'], $user['cart_id']);
+
+            $remoteUser = $this->user->fetchUserByUniqueId($user['unique_id']);
+            $cart = $this->cart->fetchById($user['unique_id'], $user['cart_id']);
+            $cartTotal = $this->fetchCartTotal($cart);
+
+            if (bcsub($remoteUser->credit,$cartTotal,2) <= 0) {
+                return json_encode([
+                    'success' => false,
+                    'message' => 'You do not have enough credit to checkout'
+                ]);
+            }
+
+            $shippingRequired = false;
+            foreach($cart['rewards'] as $c) {
+                if($c->type === 'physical') {
+                    $shippingRequired = true;
+                }
+            }
+
+            if (!$this->request->post('on_file_address') && $shippingRequired === true) {
+                if (!$this->validateAddress($this->request->post('shipping_address'))) {
+                    return json_encode([
+                        'success' => false,
+                        'message' => $this->fetchValidationError()
+                    ]);
+                }
+            }
+
             if (empty($cart['ids'])) {
                 return $emptyCartError;
             }
@@ -265,11 +273,10 @@ Class Ajax extends \Zewa\Controller {
         $ids = array_values($cart['ids']);
         
         $transactionModel = new Models\Transaction();
-        $create = 
-            $transactionModel->create($user['unique_id'], [
-                'shipping_address' => $this->request->post('shipping_address'),
-                'rewards' => $ids
-            ]);
+        $create = $transactionModel->create($user['unique_id'], [
+            'shipping_address' => $this->request->post('shipping_address', false),
+            'rewards' => $ids
+        ]);
 
         if ($create->success !== true) {
             return json_encode([

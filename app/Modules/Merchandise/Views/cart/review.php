@@ -18,7 +18,13 @@
                 </div>
                 <div class="cart_navigation">
                     <a class="prev-btn" href="<?=$this->baseURL()?>">Continue shopping</a>
+                    <?php if($shipping_required === true) : ?>
                     <a id="previewPageNext" class="next-btn<?=$emptyCart ? ' hide' : ''?>" href="<?=$this->baseURL('merchandise/cart/shipping')?>">Shipping Address</a>
+                    <?php else:?>
+                        <form action="<?=$this->baseURL('merchandise/ajax/createTransaction')?>" class="request" method="post">
+                            <button class="next-btn" type="submit">Complete</button>
+                        </form>
+                    <?php endif;?>
                 </div>
             </div>
         </div>
