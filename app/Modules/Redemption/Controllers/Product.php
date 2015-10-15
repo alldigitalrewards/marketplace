@@ -70,7 +70,7 @@ Class Product extends \Zewa\Controller {
             $this->router->redirect('redemption/product');
         }
         
-        $this->data['product'] = $this->merch->fetchProduct($productId);
+        $this->data['product'] = $this->merch->fetchReward($productId);
         
         if (empty($this->data['product'])) {
             die('Oop! Wrong URL');
