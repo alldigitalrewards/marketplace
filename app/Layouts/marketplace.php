@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<?=$this->baseURL('resources/jquery-ui/themes/base/all.css');?>" />
     
     <!--Application Styles-->
-    <link rel="stylesheet" href="<?=$this->baseURL('resources/app/css/style2.css');?>" />
+    <link rel="stylesheet" href="<?=$this->baseURL('resources/app/css/style.css');?>" />
     
     <!--Custom Styles-->
     <link rel="stylesheet" href="<?=$this->baseURL('resources/app/css/custom.css');?>" />
