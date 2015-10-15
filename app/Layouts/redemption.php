@@ -65,7 +65,7 @@
                    My Account
                </a>
               <ul class="dropdown-menu">
-                <li><a href="<?=$this->baseUrl('merchandise/cart')?>">Review Cart</a></li>
+                <li><a href="<?=$this->baseUrl('merchandise/cart/review')?>">Review Cart</a></li>
                 <li><a href="<?=$this->baseUrl('account/home')?>">Settings</a></li>
                 <li><a href="<?=$this->baseUrl('account/home/logout')?>">Logout</a></li>
               </ul>
