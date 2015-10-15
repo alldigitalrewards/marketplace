@@ -1,13 +1,24 @@
+/*
+    Script Description
+    ---------------------------------------------------
+    Global logic for the entire Marketplace application
+    ---------------------------------------------------
+*/
 !function($,doc) {
+    
+    //Extend jquery
     $.extend($.gritter.options, {
         position: 'bottom-left', // defaults to 'top-right' but can be 'bottom-left', 'bottom-right', 'top-left', 'top-right' (added in 1.7.1)
         fade_in_speed: 'medium', // how fast notifications fade in (string or int)
         fade_out_speed: 2000, // how fast the notices fade out
         time: 6000 // hang on the screen for...
     });
+    
+    //Set the global callback for ajax requests made with the request lib
     iim.request.defaults({
         callback: function (response) {
             
+            //Handle notification messages from the server
             if (typeof response.message !== 'undefined') {
                 
                 var title = 'Success';
@@ -40,17 +51,6 @@
                 }
             }
             
-            //On form validation failure
-            if (typeof response.validation !== 'undefined') {
-                $.each(response.validation, function(key,message) {
-                    $.gritter.add({
-                        title: 'Invalid Field',
-                        text: message,
-                        position: 'bottom-right'
-                    }); 
-                });
-            }
-            
             //If there are no products in the cart then hide the "Proceed to Shipping" button
             if ($('#cart-review tr').length > 2) {//There are 2 rows in the table by default
                 $("#previewPageNext").removeClass('hide');
@@ -58,6 +58,7 @@
                 $("#previewPageNext").addClass('hide');
             }
             
+            //Redirect request from the server
             if (typeof response.redirect !== 'undefined') {
                 window.location = response.redirect
             }
@@ -66,8 +67,12 @@
         
     });
     
+    //The default ajax requests for every page load
     $(doc).ready(function() {
         
+       /*
+            Fetch the cart preview
+       */
        $.get(baseURL + 'merchandise/ajax/fetchCartPreview', function(response) {
            
             if (typeof response.cartPreview !== 'undefined') {
@@ -78,6 +83,10 @@
             
         },'json'); 
         
+        /*
+            Fetch cart preview if there is a preview table on the current page
+            NOTE: this is used in the checkout process
+        */
         if ($('#cart-review').length) {
             
             $.get(baseURL + 'merchandise/ajax/fetchCartReview', function(response) {
@@ -90,15 +99,19 @@
             
         }
         
+        /*
+            Automatically submit quantity input forms
+            when a quantity field is updated
+        */
         $('body').on('keyup', '.product-quantity-input', function() {
-                var self = $(this);
-                
-                if (self.val() == '') {
-                    return false;
-                }
-                
-                self.closest('form').submit();
-            });
+            var self = $(this);
+            
+            if (self.val() == '') {
+                return false;
+            }
+            
+            self.closest('form').submit();
+        });
     
     });
     

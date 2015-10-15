@@ -8,7 +8,8 @@
 # Logs
 access.log
 error.log
-
+php.ini
+php_errors.log
 # Buildable Files
 build/logs/
 build/pdepend/

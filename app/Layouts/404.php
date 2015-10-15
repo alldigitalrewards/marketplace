@@ -6,7 +6,7 @@ $this->addCSS([
 ]);
 
 $this->addJS([
-    'resources/jQuery/dist/jquery.min.js',
+    'resources/jquery/dist/jquery.min.js',
     'resources/bootstrap/dist/js/bootstrap.min.js'
 ]);
 ?>
