@@ -157,7 +157,7 @@ Class Ajax extends \Zewa\Controller {
         if ($quantity === false) {
             return json_encode([
                 'success' => false,
-                'Item quantity is required'
+                'message' => 'Item quantity is required'
             ]);
         }
         
