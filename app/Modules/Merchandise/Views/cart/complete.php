@@ -3,12 +3,6 @@
     <div class="container" id="columns">
         <div class="page-content page-order">
             
-            <ul class="step">
-                <li><span>Review Cart</span></li>
-                <li><span>Shipping Address</span></li>
-                <li class="current-step"><span>Complete</span></li>
-            </ul>
-            <br/>
             <div class="order-detail-content">
                 
                 <br/>
@@ -24,31 +18,27 @@
                 <!-- box product -->
                 <div class="page-product-box">
                     <h3 class="heading">You might also like</h3>
-                    <ul class="products product-list owl-carousel" data-dots="false" data-loop="true" data-nav="true" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
+                    <ul class="owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "15" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4},"1200":{"items":5}}'>
                         
-                        <?php foreach($relatedProducts as $relProduct): ?>
+                        <?php foreach($relatedProducts as $product): ?>
                         <li>
-                            <div class="product-container">
-                                <div class="left-block">
-                                    <?php if($relProduct->image_processed): ?>
-                                    <a href="<?=$this->baseUrl('merchandise/product/detail/'.$relProduct->id)?>">
-                                        <img class="img-responsive" src="<?=$feedUrl.$relProduct->image_full;?>" alt="Product">
-                                    </a>
-                                    <?php else: ?>
-                                    <a href="<?=$this->baseUrl('merchandise/product/detail/'.$relProduct->id)?>">
-                                        <img class="img-responsive" src="<?=$feedUrl.'no-image.jpg'?>" alt="Product">
-                                    </a>
-                                    <?php endif; ?>
-                                    <div class="add-to-cart">
-                                        <a title="Add to Cart" class="request" href="<?=$this->baseUrl('merchandise/ajax/addToCart/'.$relProduct->id)?>">Add to cart</a>
-                                    </div>
-                                </div>
-                                <div class="right-block">
-                                    <h5 class="product-name"><a href="<?=$this->baseUrl('merchandise/product/detail/'.$relProduct->id)?>"><?=substr($relProduct->title,0,20)?></a></h5>
-                                    <div class="content_price">
-                                        <span class="price product-price"><i class="fa fa-tag"></i> <?=$relProduct->credit_cost?></span>
-                                    </div>
-                                </div>
+                            <a href="<?=$this->baseUrl('merchandise/product/detail/'.$product->id)?>">
+                                <?php if($product->image_processed): ?>
+                                <img src="<?=$feedUrl.$product->image_full;?>" alt="Product">
+                                <?php else: ?>
+                                <img src="<?=$feedUrl.'no-image.jpg'?>" alt="Product">
+                                <?php endif; ?>
+                            </a>
+                            <h5><?=substr($product->title,0,18)?></h5>
+                            <a 
+                                title="Add to cart"
+                                href="<?=$this->baseUrl('merchandise/ajax/addToCart/'.$product->id)?>" 
+                                class="btn request">
+                                <i class="fa fa-shopping-cart"></i> Add to cart
+                            </a>
+                            <div class="product-price">
+                                <i class="fa fa-tag"></i> 
+                                <span class="normal-price"><?=$product->credit_cost?></span>
                             </div>
                         </li>
                         <?php endforeach; ?>
@@ -60,9 +50,8 @@
                 
                 <hr/>
                 
-                <div class="cart_navigation">
-                    <a class="prev-btn" href="<?=$this->baseURL()?>">Back to shopping</a>
-                </div>
+                <a class="btn btn-default" href="<?=$this->baseURL()?>">Back to shopping</a>
+                
             </div>
         </div>
     </div>

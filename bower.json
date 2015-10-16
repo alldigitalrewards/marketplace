@@ -19,7 +19,7 @@
     "bootstrap": "~3.3.5",
     "select2": "~4.0.0",
     "bxslider-4": "~4.2.5",
-    "jquery.actual": "~1.0.17",
+    "jquery.actual": "dreamerslab/jquery.actual#~1.0.17",
     "font-awesome": "~4.4.0",
     "jquery-ui": "~1.11.4",
     "owl.carousel": "~2.0.0-beta.3",

@@ -5,7 +5,7 @@ $this->addJS([
 ]);
 ?>
 <!--Redemption Progress-->
-<div class="container bg-blue">
+<div class="container bg-fill-blue">
     <div class="row bs-wizard">    
         <div class="col-xs-3 bs-wizard-step complete">
           <div class="text-center bs-wizard-stepnum">Redemption Code</div>
@@ -46,30 +46,15 @@ $this->addJS([
      data-paginate-url="<?=$this->baseURL('redemption/ajax/searchProducts');?>">
         <div class="paginated-search group-border-dashed">
         
-        <div class="columns-container">
-            <div class="container" id="columns">
+            <div class="container">
                 <!-- row -->
                 <div class="row">
                     <!-- Center colunm-->
                     <div class="center_column col-xs-12" id="center_column">
                         <!-- view-product-list-->
                         <div id="view-product-list" class="view-product-list">
-                            <h2 class="page-heading">
-                                <span class="page-heading-title"><?=!empty( $search ) ?: 'Browse'?></span>
-                            </h2>
-                            <ul class="display-product-option">
-                                <li class="view-as-grid selected">
-                                    <span>grid</span>
-                                </li>
-                                <li class="view-as-list">
-                                    <span>list</span>
-                                </li>
-                            </ul>
-                            <!-- PRODUCT LIST -->
                             
-                            <ul class="row product-list grid paginated-container">
-                                
-                            </ul>
+                            <ul class="row product-list grid paginated-container"></ul>
                                 
                             <ul class="pull-right paginated-buttons pagination pagination-lg hide">
                                 <li><a href="#" data-paginate-direction="previous">« Previous</a></li>
@@ -79,8 +64,9 @@ $this->addJS([
                                   </a>
                                 </li>
                             </ul>
+                            
                             <div class="clearfix"></div>
-                            <!-- ./PRODUCT LIST -->
+                            
                         </div>
                         <!-- ./view-product-list-->
                     </div>
@@ -88,6 +74,6 @@ $this->addJS([
                 </div>
                 <!-- ./row-->
             </div>
-        </div>
+            
     </div>
 </div>
