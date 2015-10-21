@@ -16,6 +16,7 @@ Class Cart extends \Zewa\Controller {
         parent::__construct();
         $this->data = [];
         $this->merch = new Models\Merchandise();
+        $this->cart = new Models\Cart();
         $this->permission = $this->request->session('user') ? 1 : 0;
         $this->data['feedUrl'] = $this->configuration->api->feed_url;
         $this->data['categories'] = $this->merch->fetchCategoriesAndProducts();
@@ -26,6 +27,17 @@ Class Cart extends \Zewa\Controller {
     public function review()
     {
         $userData = $this->request->session('user');
+        $cart = $this->cart->fetchById($userData['unique_id'], $userData['cart_id']);
+
+        //Determine if shipping address is required
+        $shippingRequired = false;
+        foreach($cart['rewards'] as $product) {
+            if($product->type === 'physical') {
+                $shippingRequired = true;
+            }
+        }
+        
+        $this->data['shippingRequired'] = $shippingRequired;
         
         if (empty($userData['cart_id'])) {
             $cartItemIds = [];
@@ -52,12 +64,12 @@ Class Cart extends \Zewa\Controller {
     
     public function shipping()
     {
-        $userModel = new Models\User();
         $userData = $this->request->session('user');
+        $userModel = new Models\User();
         $userData = $userModel->fetchUserByUniqueId($userData['unique_id']);
         $this->data['user'] = $userData;
 
-        if( ! empty ( $userData->shipping_address->state ) ) {
+        if(!empty($userData->shipping_address->state)) {
             $state = $userData->shipping_address->state;
         } else {
             $state = false;
@@ -92,6 +104,30 @@ Class Cart extends \Zewa\Controller {
         $view->setLayout('marketplace');
         $view->setProperty($this->data);
         return $view->render();
+    }
+    
+    public function next()
+    {
+        $userData = $this->request->session('user');
+        $cart = $this->cart->fetchById($userData['unique_id'], $userData['cart_id']);
+        
+        //Determine if shipping address is required
+        foreach($cart['rewards'] as $product) {
+            if($product->type === 'physical') {
+                $shippingRequired = true;
+            }
+        }
+        
+        if ($shippingRequired) {
+            return json_encode([
+                'redirect' => $this->router->baseURL('merchandise/cart/shipping')
+            ]);
+        } else {
+            return json_encode([
+                'ajax' => $this->router->baseURL('merchandise/transaction/create')
+            ]);
+        }
+        
     }
 
 }

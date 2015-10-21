@@ -22,9 +22,20 @@ Class Checkout extends \Zewa\Controller {
     
     public function shipping()
     {
-        if (!$this->permission) {
+        $redemption = $this->request->session('redemption');
+        if (!$redemption) {
             die('Opps! Wrong page');    
         }
+        
+        $merchModel = new Models\Merchandise;
+        $product = $merchModel->fetchReward($redemption['redeemed_product_id']);
+        
+        $shippingRequired = false;
+        if($product->type !== 'physical') {
+            $shippingRequired = true;
+        }
+        
+        $this->data['shippingRequired'] = $shippingRequired;
         
         $userModel = new Models\User();
         $userData = $this->request->session('user');

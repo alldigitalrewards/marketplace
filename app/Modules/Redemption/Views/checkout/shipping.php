@@ -31,7 +31,7 @@
 <!-- page wapper-->
 <div class="container">
    
-    <form action="<?=$this->baseURL('redemption/ajax/createTransaction')?>" class="request" method="post">
+    <form action="<?=$this->baseURL('merchandise/transaction/create')?>" class="request" method="post">
         
         <div class="row">
 

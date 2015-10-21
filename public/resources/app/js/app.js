@@ -63,6 +63,11 @@
                 window.location = response.redirect
             }
             
+            //Ajax call request from the server
+            if (typeof response.ajax !== 'undefined') {
+                iim.request.ajax(response.ajax, {}, function() {});
+            }
+            
         }
         
     });

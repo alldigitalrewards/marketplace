@@ -4,7 +4,8 @@
 .bash_history
 .cache
 .viminfo
-
+app/Config/database.php
+app/Config/api.php
 # Logs
 access.log
 error.log

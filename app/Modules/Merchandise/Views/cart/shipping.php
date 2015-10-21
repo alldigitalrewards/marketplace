@@ -1,7 +1,7 @@
 <!-- page wapper-->
     <div class="container">
                 
-        <form action="<?=$this->baseURL('merchandise/ajax/createTransaction')?>" class="request" method="post">
+        <form action="<?=$this->baseURL('merchandise/transaction/create')?>" class="request" method="post">
 
             <div class="row">
 
@@ -83,13 +83,7 @@
                 <a class="btn btn-default" href="<?=$this->baseURL()?>">Continue shopping</a>
             </div>
             <div class="col-xs-6 text-right">
-                <?php if($shipping_required === true) : ?>
-                <a class="btn btn-default" href="<?=$this->baseURL('merchandise/cart/shipping')?>">Pick Another Prize</a>
-                <?php else:?>
-                <form action="<?=$this->baseURL('merchandise/ajax/createTransaction')?>" class="request" method="post">
-                    <button class="btn btn-default" type="submit">Complete</button>
-                </form>
-                <?php endif;?>
+                <button class="btn btn-default" type="submit">Complete</button>
             </div>
         </div>
         

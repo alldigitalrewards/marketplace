@@ -83,6 +83,9 @@ Class Ajax extends \Zewa\Controller {
             ]);
             
         }
+        
+        //Remove redemption data from session
+        $this->request->setSession('redemption', []);
 
         $user = $this->request->session('user');
         $cartId = $this->createUserCartIfNone();
@@ -135,7 +138,7 @@ Class Ajax extends \Zewa\Controller {
             $user['cart_id'] = false;
             $this->request->setSession('user', $user);
         } else {
-            $this->cart->updateById($user['unique_id'], $cartId, $ids);   
+            $this->cart->updateById($user['unique_id'], $cartId, array_values($ids));   
         }
         
         return json_encode([
@@ -178,16 +181,7 @@ Class Ajax extends \Zewa\Controller {
             $ids[] = $productId;
         }
         
-        //If the cart is empty then delete it; otherwise update it.
-        if (empty($ids)) {
-            $this->cart->deleteById($user['unique_id'], $cartId);
-            $user['cart_id'] = false;
-            $this->request->setSession('user', $user);
-        } else {
-            $this->cart->updateById($user['unique_id'], $cartId, $ids);   
-        }
-        
-        $this->cart->updateById($user['unique_id'],$cartId,$ids);
+        $this->cart->updateById($user['unique_id'],$cartId,array_values($ids));
         
         return json_encode([
             'success' => true,
@@ -269,7 +263,7 @@ Class Ajax extends \Zewa\Controller {
             }
         }
         
-        $ids = array_values($cart['ids']);
+        $ids = $cart['ids'];
         
         $transactionModel = new Models\Transaction();
         $create = $transactionModel->create($user['unique_id'], [
