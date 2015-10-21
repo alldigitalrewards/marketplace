@@ -75,7 +75,7 @@ $this->addJS([
                         <?=$product->description?>
                     </div>
                     <hr/>
-                    <a class="btn btn-default pull-right request" href="<?=$this->baseUrl('redemption/ajax/redeem/'.$product->id)?>" class="request">
+                    <a class="btn btn-default pull-right request" href="<?=$this->baseUrl('merchandise/ajax/redeem/'.$product->id)?>" class="request">
                         <i class="fa fa-shopping-cart"></i> Redeem
                     </a>
                 </div>

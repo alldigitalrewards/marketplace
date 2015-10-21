@@ -8,7 +8,9 @@ use App\Traits;
 
 Class Transaction extends \Zewa\Controller {
     
+    use Traits\GenericTrait;
     use Traits\CartTrait;
+    use Traits\UserTrait;
     
     public function __construct() 
     {
@@ -18,7 +20,7 @@ Class Transaction extends \Zewa\Controller {
         $this->user = new Models\User;
     }
     
-    public function create($ajax = false) 
+    public function create()
     {
         $redemption = $this->request->session('redemption');
         $userData = $this->request->session('user');
@@ -61,7 +63,8 @@ Class Transaction extends \Zewa\Controller {
             $relatedProductId = $cart['ids'][0];
             
         } else {
-            
+            $relatedProductId = $redemption['redeemed_product_id'];
+
             $product = $this->merch->fetchReward($redemption['redeemed_product_id']);
             
             if($product->type === 'physical') {
@@ -122,18 +125,10 @@ Class Transaction extends \Zewa\Controller {
 
         }
         
-        if ($ajax) {
-                
-            return json_encode([
-                'success' => true,
-                'redirect' => $url,
-            ]);
-            
-        } else {
-            
-            $this->router->redirect($url);  
-               
-        }
+        return json_encode([
+            'success' => true,
+            'redirect' => $url,
+        ]);
         
     }
 

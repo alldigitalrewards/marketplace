@@ -72,7 +72,7 @@ Class Ajax extends \Zewa\Controller {
         
         $redemptionModel = new Models\Redemption;
         $response = $redemptionModel->fetchProductsByPin($this->request->post('code'));
-//        var_dump($response);die();
+
         if ($response !== false) {
             
             $redemption = $this->request->session('redemption');
@@ -92,54 +92,6 @@ Class Ajax extends \Zewa\Controller {
         ]);
     }
     
-    public function createTransaction()
-    {
-        if (!$this->permission) {
-            die('Opps! Wrong page');    
-        }
-        
-        if (!$this->validateAddress($this->request->post('shipping_address'))) {
-            return json_encode([
-                'success' => false,
-                'message' => $this->fetchValidationError()
-            ]);
-        }
-        
-        $user = $this->request->session('user');
-        $redemption = $this->request->session('redemption');
-        $productId = $redemption['redeemed_product_id'];
-
-        $transactionModel = new Models\Transaction;
-        
-        $create = $transactionModel->create($user['unique_id'], [
-                'shipping_address' => $this->request->post('shipping_address'),
-                'rewards' => [$productId],
-                'redemption' => 1,
-                'campaign_pin' => $redemption['code'],
-                'campaign_id' => $redemption['campaign_id']
-            ]);
-
-        if( ! empty ( $create ) ) {
-            if ($create->success !== true) {
-                return json_encode([
-                    'success' => false,
-                    'message' => $create->message
-                ]);
-            }
-
-            $this->request->setSession('redemption', []);
-
-            return json_encode([
-                'redirect' => $this->router->baseUrl('redemption/checkout/complete/' . $productId)
-            ]);
-        }
-
-        return json_encode([
-            'success' => false,
-            'message' => 'Oops, something went wrong. Please try again.'
-        ]);
-    }
-    
     public function redeem($productId) 
     {
         if (!$this->permission) {
@@ -155,12 +107,13 @@ Class Ajax extends \Zewa\Controller {
         $redemptionModel = new Models\Redemption;
         $response = $redemptionModel->fetchProductsByPin($redemption['code']);
 
-        if ( ! empty ( $response ) ) {
+        if (!empty($response)) {
 
             $validId = false;
             foreach($response->value as $product) {
                 if ($product->id == $productId) {
                     $validId = true;
+                    $redeemedProduct = $product;
                     break;
                 }
             }
@@ -171,16 +124,20 @@ Class Ajax extends \Zewa\Controller {
                 $redemption['redeemed_product_id'] = $productId;
                 $this->request->setSession('redemption', $redemption);
                 
-                return json_encode([
-                    'redirect' => $this->router->baseUrl('redemption/checkout/shipping')
-                ]);  
+                if ($redeemedProduct->type === 'physical') {
+                     return json_encode([
+                        'redirect' => $this->router->baseUrl('redemption/checkout/shipping')
+                    ]);
+                } else {
+                    return json_encode([
+                        'ajax' => $this->router->baseUrl('merchandise/transaction/create')
+                    ]);  
+                }
                 
             }
             
         }
         
         die('Opps! Wrong page');
-        
     }
-    
 }

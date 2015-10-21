@@ -83,6 +83,9 @@ Class Ajax extends \Zewa\Controller {
             ]);
             
         }
+        
+        //Remove redemption data from session
+        $this->request->setSession('redemption', []);
 
         $user = $this->request->session('user');
         $cartId = $this->createUserCartIfNone();

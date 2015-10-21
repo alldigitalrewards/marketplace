@@ -14,13 +14,7 @@
                     <a class="btn btn-default" href="<?=$this->baseURL()?>">Continue shopping</a>
                 </div>
                 <div class="col-xs-6 text-right">
-                    <?php if($shipping_required === true) : ?>
-                    <a id="previewPageNext" class="btn btn-default<?=$emptyCart ? ' hide' : ''?>" href="<?=$this->baseURL('merchandise/cart/shipping')?>">Continue to Shipping Address</a>
-                    <?php else:?>
-                    <form action="<?=$this->baseURL('merchandise/ajax/createTransaction')?>" class="request" method="post">
-                        <button class="btn btn-default" type="submit">Complete</button>
-                    </form>
-                    <?php endif;?>
+                    <a id="previewPageNext" class="request btn btn-default<?=$emptyCart ? ' hide' : ''?>" href="<?=$this->baseURL('merchandise/cart/next')?>">Next</a>
                 </div>
             </div>
         </div>
