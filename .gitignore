@@ -4,6 +4,7 @@
 .bash_history
 .cache
 .viminfo
+app/Config/*
 
 # Logs
 access.log

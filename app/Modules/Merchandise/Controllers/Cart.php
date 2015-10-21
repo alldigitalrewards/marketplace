@@ -93,5 +93,4 @@ Class Cart extends \Zewa\Controller {
         $view->setProperty($this->data);
         return $view->render();
     }
-
 }
