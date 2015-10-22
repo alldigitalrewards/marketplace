@@ -72,8 +72,15 @@ Class Ajax extends \Zewa\Controller {
         
         $redemptionModel = new Models\Redemption;
         $response = $redemptionModel->fetchProductsByPin($this->request->post('code'));
-
-        if ($response !== false) {
+        
+        if (isset($response->success) && !$repsonse->success) {
+            
+            return json_encode([
+                'success' => false,
+                'message' => 'Please enter a valid redemption code'
+            ]);   
+            
+        } else {
             
             $redemption = $this->request->session('redemption');
             $redemption['code'] = $this->request->post('code');
@@ -85,11 +92,6 @@ Class Ajax extends \Zewa\Controller {
             ]);
             
         }
-        
-        return json_encode([
-            'success' => false,
-            'message' => 'Please enter a valid redemption code'
-        ]);
     }
     
     public function redeem($productId) 
