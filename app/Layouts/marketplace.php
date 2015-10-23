@@ -50,6 +50,7 @@
         </ul>
       
         <ul class="nav navbar-nav navbar-right">
+            <?php if ($isLoggedIn): ?>
             <li class="dropdown">
               <a href="#" 
                 class="dropdown-toggle" 
@@ -66,6 +67,9 @@
                 <li><a href="<?=$this->baseUrl('account/home/logout')?>">Logout</a></li>
               </ul>
             </li>
+            <?php else: ?>
+            <li><a href="<?=$this->baseUrl('account/home')?>">Login</a></li>
+            <?php endif; ?>
         </ul>
         
     </div><!-- /.navbar-collapse -->
