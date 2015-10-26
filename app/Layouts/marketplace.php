@@ -51,6 +51,7 @@
       
         <ul class="nav navbar-nav navbar-right">
             <?php if ($isLoggedIn): ?>
+            <li><a href="<?=$this->baseUrl('merchandise/cart/review')?>">Review Cart</a></li>
             <li class="dropdown">
               <a href="#" 
                 class="dropdown-toggle" 
@@ -62,7 +63,6 @@
                    My Account
                </a>
               <ul class="dropdown-menu">
-                <li><a href="<?=$this->baseUrl('merchandise/cart/review')?>">Review Cart</a></li>
                 <li><a href="<?=$this->baseUrl('account/home')?>">Settings</a></li>
                 <li><a href="<?=$this->baseUrl('account/home/logout')?>">Logout</a></li>
               </ul>

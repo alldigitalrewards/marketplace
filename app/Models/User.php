@@ -31,7 +31,7 @@ Class User extends Base
             'credit' => 25000,
             'role' => $role
         ]));
-        
+
         if ($result->success === false) {
             return $result;
         }

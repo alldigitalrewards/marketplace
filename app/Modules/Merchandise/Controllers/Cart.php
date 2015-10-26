@@ -87,14 +87,14 @@ Class Cart extends \Zewa\Controller {
     public function complete($productId = false)
     {
         if (empty($productId)) {
-            die('Opps! Wrong page');
+            die('Oops! Wrong page');
         }
         
         $userData = $this->request->session('user');
         $product = $this->merch->fetchReward($productId);
         
         if (empty($product)) {
-            die('Oop! Wrong URL');
+            die('Oops! Wrong URL');
         }
         
         $this->data['relatedProducts'] = $this->merch->fetchRewards(1, 5, ['categoryId' => $product->category_id]);
@@ -110,7 +110,9 @@ Class Cart extends \Zewa\Controller {
     {
         $userData = $this->request->session('user');
         $cart = $this->cart->fetchById($userData['unique_id'], $userData['cart_id']);
-        
+
+        $shippingRequired = false;
+
         //Determine if shipping address is required
         foreach($cart['rewards'] as $product) {
             if($product->type === 'physical') {

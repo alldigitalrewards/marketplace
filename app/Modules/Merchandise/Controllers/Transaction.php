@@ -25,7 +25,7 @@ Class Transaction extends \Zewa\Controller {
         $redemption = $this->request->session('redemption');
         $userData = $this->request->session('user');
         $shippingRequired = false;
-        
+
         if (empty($redemption)) {
             
             if (empty($userData['cart_id'])) {
@@ -38,7 +38,7 @@ Class Transaction extends \Zewa\Controller {
             }
             
             //Check credits
-            $remoteUser = $this->user->fetchUserByUniqueId($user['unique_id']);
+            $remoteUser = $this->user->fetchUserByUniqueId($userData['unique_id']);
             $cart = $this->cart->fetchById($userData['unique_id'], $userData['cart_id']);
             $cartTotal = $this->fetchCartTotal($cart);
 
@@ -115,7 +115,12 @@ Class Transaction extends \Zewa\Controller {
             ]);
             
             //Delete the cart
-            $this->cart->deleteById($userData['unique_id'], $userData['cart_id'], []);
+            //@TODO: we don't need to delete the cart here, what we want to do is phase the cart to a completed status
+            //for analytic tracking
+            $user = $this->request->session('user');
+            unset($user['cart_id']);
+            $this->request->setSession('user', $user);
+            $this->cart->deleteById($userData['unique_id'], $userData['cart_id']);
             
             $url = $this->router->baseUrl('merchandise/cart/complete/' . $relatedProductId);
             

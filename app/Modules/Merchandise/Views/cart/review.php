@@ -14,7 +14,7 @@
                     <a class="btn btn-default" href="<?=$this->baseURL()?>">Continue shopping</a>
                 </div>
                 <div class="col-xs-6 text-right">
-                    <a id="previewPageNext" class="request btn btn-default<?=$emptyCart ? ' hide' : ''?>" href="<?=$this->baseURL('merchandise/cart/next')?>">Next</a>
+                    <a id="previewPageNext" class="request btn btn-default<?=$emptyCart ? ' hide' : ''?>" href="<?=$this->baseURL('merchandise/cart/next')?>"><?=$shippingRequired === true ? 'Next':'Complete';?></a>
                 </div>
             </div>
         </div>
