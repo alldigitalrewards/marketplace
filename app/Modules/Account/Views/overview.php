@@ -35,19 +35,19 @@
                         <div class="col-lg-6">
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="password" class="form-control" name="new_password" placeholder="New Password" value="">
+                                    <input autocomplete="off" type="password" class="form-control" name="new_password" placeholder="New Password" value="">
                                 </div>
                             </div>
                             <br/>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="password" class="form-control" name="confirm_new_password" placeholder="Confirm New Password" value="">
+                                    <input autocomplete="off" type="password" class="form-control" name="confirm_new_password" placeholder="Confirm New Password" value="">
                                 </div>
                             </div>
                             <br/>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="password" class="form-control" name="current_password" placeholder="Current Password" value="">
+                                    <input autocomplete="off" type="password" class="form-control" name="current_password" placeholder="Current Password" value="">
                                 </div>
                             </div>
                             <br/>

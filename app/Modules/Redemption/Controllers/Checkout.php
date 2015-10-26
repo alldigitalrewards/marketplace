@@ -24,7 +24,7 @@ Class Checkout extends \Zewa\Controller {
     {
         $redemption = $this->request->session('redemption');
         if (!$redemption) {
-            die('Opps! Wrong page');    
+            die('Oops! Wrong page');
         }
         
         $merchModel = new Models\Merchandise;
@@ -54,14 +54,14 @@ Class Checkout extends \Zewa\Controller {
     public function complete($productId)
     {
         if (!$this->permission) {
-            die('Opps! Wrong page');    
+            die('Oops! Wrong page');
         }
         
         $merch = new Models\Merchandise();
         $this->data['product'] = $merch->fetchReward($productId);
         
         if (empty($this->data['product'])) {
-            die('Oop! Wrong URL');
+            die('Oops! Wrong URL');
         }
         
         $userModel = new Models\User();

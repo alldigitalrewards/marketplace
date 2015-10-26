@@ -4,10 +4,9 @@
         <div class="page-content page-order">
             
             <div class="order-detail-content">
-                
                 <br/>
                 <div class="text-center">
-                    <img src="<?=$this->baseUrl('resources/app/data/option7/s1.png')?>" alt=""/>
+                    <img src="<?=$this->baseUrl('resources/app/images/s1.png')?>" alt=""/>
                 </div>
                 <br/>
                 <h2 class="text-center text-info">

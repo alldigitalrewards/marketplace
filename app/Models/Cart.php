@@ -17,7 +17,6 @@ Class Cart extends Base
 
     public function fetchById($uniqueId, $cartId)
     {
-
         $response = json_decode($this->rewards->getUserCart($uniqueId, $cartId));
         $rewards = [];
         if (!empty($response->products) && is_array($response->products)) {
