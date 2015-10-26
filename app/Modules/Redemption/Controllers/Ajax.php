@@ -20,14 +20,13 @@ Class Ajax extends \Zewa\Controller {
         $this->permission = $this->request->session('user') ? 1 : 0;
         $this->data['isLoggedIn'] = $this->permission;
         $this->data['feedUrl'] = $this->configuration->api->feed_url;
+        if (!$this->permission) {
+            $this->router->redirect($this->router->baseURL('account/home'));
+        }
     }
     
     public function searchProducts()
     {
-        if (!$this->permission) {
-            die('Opps! Wrong page');    
-        }
-        
         $redemption = $this->request->session('redemption');
         $redemptionCode = $redemption['code'];
         
@@ -59,10 +58,6 @@ Class Ajax extends \Zewa\Controller {
     
     public function validateCode() 
     {
-        if (!$this->permission) {
-            die('Opps! Wrong page');    
-        }
-        
         if (empty($this->request->post('code'))) {
             return json_encode([
                 'success' => false,
@@ -96,10 +91,6 @@ Class Ajax extends \Zewa\Controller {
     
     public function redeem($productId) 
     {
-        if (!$this->permission) {
-            die('Opps! Wrong page');
-        }
-        
         $redemption = $this->request->session('redemption');
         
         if (empty($redemption['code'])) {

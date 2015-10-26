@@ -14,7 +14,7 @@
     
     <div class="row">
         
-        <div class="col-xs-12 col-md-7">
+        <div class="col-xs-12 col-md-<?=$product->type == 'physical' ? '7' : '12'?>">
             <div class="row">
                 <div class="col-xs-5">
                     <img src="<?=$feedUrl.$product->image_full?>" alt=""/>
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        
+        <?php if ($product->type == 'physical'): ?>
         <div class="col-xs-12 col-md-5">
             
             <div class="row">
@@ -108,6 +108,7 @@
             </div>
             
         </div>
+        <?php endif; ?>
         
     </div>
         

@@ -18,6 +18,10 @@ Class Transaction extends \Zewa\Controller {
         $this->merch = new Models\Merchandise;
         $this->cart = new Models\Cart;
         $this->user = new Models\User;
+        $this->permission = $this->request->session('user') ? 1 : 0;
+        if (!$this->permission) {
+            $this->router->redirect($this->router->baseURL('account/home'));
+        }
     }
     
     public function create()
@@ -136,5 +140,26 @@ Class Transaction extends \Zewa\Controller {
         ]);
         
     }
-
+    
+    private function fetchCartTotal($cart = false)
+    {
+        $user = $this->request->session('user');
+        if( $cart === false ) {
+            $cartId = $user['cart_id'];
+            $cartModel = new Models\Cart;
+            $cart = $cartModel->fetchById($user['unique_id'], $cartId);
+        }
+        $total = 0.00;
+        
+        if(!empty($cart['products'])) {
+            foreach($cart['products'] as $product) {
+                for($i = 0; $i < $product->cart_quantity; $i++) {
+                    $total = bcadd($total, $product->credit_cost, 2);
+                }
+            }
+        }
+        
+        return $total;
+    }
+    
 }

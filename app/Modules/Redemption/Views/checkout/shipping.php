@@ -56,11 +56,13 @@
         <br/>
         
         <div class="row">
-
-            <div class="col-xs-12 col-md-6">
-                <select name="shipping_address[state]" class="form-control">
-                    <?=$stateOptions?>
-                </select>
+            
+            <div class="col-xs-6">
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="text" class="form-control" name="shipping_address[address]" placeholder="Address 1" value="<?=$user->shipping_address->address?>">
+                    </div>
+                </div>  
             </div>
             
             <div class="col-xs-12 col-md-6">
@@ -77,7 +79,13 @@
         
         <div class="row">
             
-            <div class="col-xs-12 col-md-6">
+            <div class="col-xs-12 col-md-4">
+                <select name="shipping_address[state]" class="form-control">
+                    <?=$stateOptions?>
+                </select>
+            </div>
+            
+            <div class="col-xs-12 col-md-4">
                 <div class="control-group">
                     <div class="controls">
                         <input type="text" class="form-control" name="shipping_address[zip]" placeholder="Post Code" value="<?=$user->shipping_address->zip?>">
@@ -85,21 +93,10 @@
                 </div>
             </div>
             
-            <div class="col-xs-12 col-md-6">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="control-group">
-                            <div class="controls">
-                                <input type="text" class="form-control" name="shipping_address[address]" placeholder="Address 1" value="<?=$user->shipping_address->address?>">
-                            </div>
-                        </div>  
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="control-group">
-                            <div class="controls">
-                                <input type="text" class="form-control" name="shipping_address[secondary_address]" placeholder="Address 2 (optional)" value="<?=$user->shipping_address->address?>">
-                            </div>
-                        </div>  
+            <div class="col-xs-12 col-md-4">
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="text" class="form-control" name="shipping_address[secondary_address]" placeholder="Address 2 (optional)" value="<?=$user->shipping_address->address?>">
                     </div>
                 </div>
             </div>
@@ -110,7 +107,7 @@
         
         <div class="row">
             <div class="col-xs-6">
-                <a class="btn btn-default" href="<?=$this->baseURL('redemption/product/result')?>">Continue shopping</a>
+                <a class="btn btn-default" href="<?=$this->baseURL('redemption/product/result')?>">Back to redemption options</a>
             </div>
             <div class="col-xs-6 text-right">
                 <button class="btn btn-default" type="submit">Complete</button>

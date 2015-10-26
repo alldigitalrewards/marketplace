@@ -10,7 +10,6 @@ Class Ajax extends \Zewa\Controller {
 
     use Traits\GenericTrait;
     use Traits\UserTrait;
-    use Traits\CartTrait;
 
     public $data;
 
@@ -28,9 +27,9 @@ Class Ajax extends \Zewa\Controller {
     public function fetchCartReview($json = true)
     {
         if (!$this->permission) {
-            die('Oops! Wrong page');
+            $this->router->redirect($this->router->baseURL('account/home'));
         }
-
+        
         $user = $this->request->session('user');
         $cartId = $user['cart_id'];
         $cart = $this->cart->fetchById($user['unique_id'], $cartId);
@@ -51,9 +50,11 @@ Class Ajax extends \Zewa\Controller {
     public function fetchCartPreview($json = true)
     {
         if (!$this->permission) {
-            die('Oops! Wrong page');
+            return json_encode([
+                'success' => false
+            ]);
         }
-
+        
         $user = $this->request->session('user');
         $cartId = $user['cart_id'];
         $cart = $this->cart->fetchById($user['unique_id'], $cartId);
@@ -76,14 +77,9 @@ Class Ajax extends \Zewa\Controller {
     public function addToCart($productId)
     {
         if (!$this->permission) {
-
-            return json_encode([
-                'success' => false,
-                'message' => 'Please login before adding anything to your cart'
-            ]);
-
+            $this->router->redirect($this->router->baseURL('account/home'));
         }
-
+        
         //Remove redemption data from session
         $this->request->setSession('redemption', []);
 
@@ -116,9 +112,9 @@ Class Ajax extends \Zewa\Controller {
     public function removeFromCart($productId)
     {
         if (!$this->permission) {
-            die('Oops! Wrong page');
+            $this->router->redirect($this->router->baseURL('account/home'));
         }
-
+        
         $user = $this->request->session('user');
         $cartId = $this->createUserCartIfNone();
         $cart = $this->cart->fetchById($user['unique_id'], $cartId);
@@ -152,9 +148,9 @@ Class Ajax extends \Zewa\Controller {
     public function updateProductQuantity($productId, $quantity = false)
     {
         if (!$this->permission) {
-            die('Oops! Wrong page');
+            $this->router->redirect($this->router->baseURL('account/home'));
         }
-
+        
         $quantity = $this->request->post('quantity', $quantity);
 
         if ($quantity === false) {
@@ -217,82 +213,130 @@ Class Ajax extends \Zewa\Controller {
 
         return $view->render();
     }
-
-    public function createTransaction()
+    
+    private function createUserCartIfNone() 
     {
+        $cartModel = new Models\Cart;
+        $userModel = new Models\User;
         $user = $this->request->session('user');
-        $emptyCartError = json_encode([
-            'success' => false,
-            'message' => 'Please add items to your cart before checking out'
-        ]);
-
 
         if (empty($user['cart_id'])) {
-            return $emptyCartError;
+
+            $response = $cartModel->create($user['unique_id']);
+            $cartId = $response->cartId;
+            $user['cart_id'] = $cartId;
+            $this->request->setSession('user', $user);
+            $userModel->updateCartId($user['id'], $cartId);
+            
         } else {
-
-            $remoteUser = $this->user->fetchUserByUniqueId($user['unique_id']);
-            $cart = $this->cart->fetchById($user['unique_id'], $user['cart_id']);
-            $cartTotal = $this->fetchCartTotal($cart);
-
-            if (bcsub($remoteUser->credit,$cartTotal,2) <= 0) {
-                return json_encode([
-                    'success' => false,
-                    'message' => 'You do not have enough credit to checkout'
-                ]);
-            }
-
-            $shippingRequired = false;
-            foreach($cart['rewards'] as $c) {
-                if($c->type === 'physical') {
-                    $shippingRequired = true;
-                }
-            }
-
-            if (!$this->request->post('on_file_address') && $shippingRequired === true) {
-                if (!$this->validateAddress($this->request->post('shipping_address'))) {
-                    return json_encode([
-                        'success' => false,
-                        'message' => $this->fetchValidationError()
-                    ]);
-                }
-            }
-
-            if (empty($cart['ids'])) {
-                return $emptyCartError;
-            }
+            
+            $cartId = $user['cart_id'];
+            
         }
-
-        $ids = $cart['ids'];
-
-        $transactionModel = new Models\Transaction();
-        $create = $transactionModel->create($user['unique_id'], [
-            'shipping_address' => $this->request->post('shipping_address', false),
-            'rewards' => $ids
-        ]);
-
-        if ($create->success !== true) {
-            return json_encode([
-                'success' => false,
-                'message' => $create->message
-            ]);
-        }
-
-        //Update user credit
-        $this->user->updateUserByUniqueId($user['unique_id'], [
-            'credit' => bcsub($remoteUser->credit,$cartTotal,2)
-        ]);
-
-        //We will use this to generate the "You may also like" results on the "complete" page
-        $productId = $ids[0];
-
-        //Empty out the cart
-        $this->cart->updateById($user['unique_id'], $user['cart_id'], []);
-
-        return json_encode([
-            'success' => true,
-            'redirect' => $this->router->baseUrl('merchandise/cart/complete/'.$productId),
-        ]);
+        
+        return $cartId;
     }
+    
+    private function fetchCartTotal($cart = false)
+    {
+        $user = $this->request->session('user');
+        if( $cart === false ) {
+            $cartId = $user['cart_id'];
+            $cartModel = new Models\Cart;
+            $cart = $cartModel->fetchById($user['unique_id'], $cartId);
+        }
+        $total = 0.00;
+        
+        if(!empty($cart['products'])) {
+            foreach($cart['products'] as $product) {
+                for($i = 0; $i < $product->cart_quantity; $i++) {
+                    $total = bcadd($total, $product->credit_cost, 2);
+                }
+            }
+        }
+        
+        return $total;
+    }
+
+    // public function createTransaction()
+    // {
+    //     if (!$this->permission) {
+    //         $this->router->redirect($this->router->baseURL('account/home'));
+    //     }
+        
+    //     $user = $this->request->session('user');
+    //     $emptyCartError = json_encode([
+    //         'success' => false,
+    //         'message' => 'Please add items to your cart before checking out'
+    //     ]);
+
+
+    //     if (empty($user['cart_id'])) {
+    //         return $emptyCartError;
+    //     } else {
+
+    //         $remoteUser = $this->user->fetchUserByUniqueId($user['unique_id']);
+    //         $cart = $this->cart->fetchById($user['unique_id'], $user['cart_id']);
+    //         $cartTotal = $this->fetchCartTotal($cart);
+
+    //         if (bcsub($remoteUser->credit,$cartTotal,2) <= 0) {
+    //             return json_encode([
+    //                 'success' => false,
+    //                 'message' => 'You do not have enough credit to checkout'
+    //             ]);
+    //         }
+
+    //         $shippingRequired = false;
+    //         foreach($cart['rewards'] as $c) {
+    //             if($c->type === 'physical') {
+    //                 $shippingRequired = true;
+    //             }
+    //         }
+
+    //         if (!$this->request->post('on_file_address') && $shippingRequired === true) {
+    //             if (!$this->validateAddress($this->request->post('shipping_address'))) {
+    //                 return json_encode([
+    //                     'success' => false,
+    //                     'message' => $this->fetchValidationError()
+    //                 ]);
+    //             }
+    //         }
+
+    //         if (empty($cart['ids'])) {
+    //             return $emptyCartError;
+    //         }
+    //     }
+
+    //     $ids = $cart['ids'];
+
+    //     $transactionModel = new Models\Transaction();
+    //     $create = $transactionModel->create($user['unique_id'], [
+    //         'shipping_address' => $this->request->post('shipping_address', false),
+    //         'rewards' => $ids
+    //     ]);
+
+    //     if ($create->success !== true) {
+    //         return json_encode([
+    //             'success' => false,
+    //             'message' => $create->message
+    //         ]);
+    //     }
+
+    //     //Update user credit
+    //     $this->user->updateUserByUniqueId($user['unique_id'], [
+    //         'credit' => bcsub($remoteUser->credit,$cartTotal,2)
+    //     ]);
+
+    //     //We will use this to generate the "You may also like" results on the "complete" page
+    //     $productId = $ids[0];
+
+    //     //Empty out the cart
+    //     $this->cart->updateById($user['unique_id'], $user['cart_id'], []);
+
+    //     return json_encode([
+    //         'success' => true,
+    //         'redirect' => $this->router->baseUrl('merchandise/cart/complete/'.$productId),
+    //     ]);
+    // }
 
 }
