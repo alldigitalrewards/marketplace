@@ -18,18 +18,13 @@ Class Product extends \Zewa\Controller {
         $this->data['feedUrl'] = $this->configuration->api->feed_url;
         $this->permission = $this->request->session('user') ? 1 : 0;
         $this->data['isLoggedIn'] = $this->permission;
+        if (!$this->permission) {
+            $this->router->redirect($this->router->baseURL('account/home'));
+        }
     }
 
     public function index()
     {
-        if (!$this->permission) {
-            $view = new View();
-            $view->setView('login');
-            $view->setLayout('redemption');
-            $view->setProperty($this->data);
-            return $view->render();   
-        }
-        
         $this->data['hotPicks'] = $this->merch->fetchHotPicks();
         $view = new View();
         $view->setView('home');
@@ -40,10 +35,6 @@ Class Product extends \Zewa\Controller {
     
     public function result()
     {
-        if (!$this->permission) {
-            die('Opps! Wrong page');    
-        }
-        
         $redemption = $this->request->session('redemption');
         if (empty($redemption['code'])) {
             $this->router->redirect('redemption/product');
@@ -61,10 +52,6 @@ Class Product extends \Zewa\Controller {
     
     public function detail($productId = false)
     {
-        if (!$this->permission) {
-            die('Opps! Wrong page');    
-        }
-        
         $redemption = $this->request->session('redemption');
         if (empty($redemption['code'])) {
             $this->router->redirect('redemption/product');

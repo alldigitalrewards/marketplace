@@ -22,6 +22,9 @@ Class Cart extends \Zewa\Controller {
         $this->data['categories'] = $this->merch->fetchCategoriesAndProducts();
         $this->data['search'] = $this->request->get('q','');
         $this->data['isLoggedIn'] = $this->permission;
+        if (!$this->permission) {
+            $this->router->redirect($this->router->baseURL('account/home'));
+        }
     }
 
     public function review()

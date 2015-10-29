@@ -14,6 +14,22 @@
         time: 6000 // hang on the screen for...
     });
     
+    //Set global ajax callback to check for redirects
+    var origOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(method, requestedURL) {
+        this.addEventListener('load', function() {
+            //If the request was redirected
+            if (this.responseURL != requestedURL) {
+                $.gritter.add({
+                    title: 'Oops',
+                    text: 'Please login to complete this action',
+                    position: 'bottom-right'
+                });
+            }
+        });
+        origOpen.apply(this, arguments);
+    };
+    
     //Set the global callback for ajax requests made with the request lib
     iim.request.defaults({
         callback: function (response) {
@@ -41,7 +57,7 @@
             
             //Updating cart preview when a product is added
             if (typeof response.cartPreview !== 'undefined') {
-                $('#cart-block').html(response.cartPreview);
+                $('#cart-preview').html(response.cartPreview);
             }
             
             //Cart review (in checkout proccess)
@@ -82,7 +98,7 @@
            
             if (typeof response.cartPreview !== 'undefined') {
                 
-                $('#cart-block').html(response.cartPreview);
+                $('#cart-preview').html(response.cartPreview);
                 
             }
             

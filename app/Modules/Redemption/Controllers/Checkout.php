@@ -18,6 +18,9 @@ Class Checkout extends \Zewa\Controller {
         $this->data['feedUrl'] = $this->configuration->api->feed_url;
         $this->permission = $this->request->session('user') ? 1 : 0;
         $this->data['isLoggedIn'] = $this->permission;
+        if (!$this->permission) {
+            $this->router->redirect($this->router->baseURL('account/home'));
+        }
     }
     
     public function shipping()
@@ -53,10 +56,6 @@ Class Checkout extends \Zewa\Controller {
     
     public function complete($productId)
     {
-        if (!$this->permission) {
-            die('Oops! Wrong page');
-        }
-        
         $merch = new Models\Merchandise();
         $this->data['product'] = $merch->fetchReward($productId);
         

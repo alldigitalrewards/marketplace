@@ -13,5 +13,4 @@ Class Redemption extends Base
     {
         return json_decode($this->rewards->getRedemptionCampaign($pin));
     }
-    
 }

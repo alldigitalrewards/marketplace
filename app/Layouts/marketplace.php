@@ -51,11 +51,11 @@
       
         <ul class="nav navbar-nav navbar-right">
             <?php if ($isLoggedIn): ?>
-            <li><a href="<?=$this->baseUrl('merchandise/cart/review')?>">Review Cart</a></li>
+            <li class="dropdown" id="cart-preview"></li>
             <li class="dropdown">
               <a href="#" 
                 class="dropdown-toggle" 
-                data-toggle="dropdown" 
+                data-toggle="dropdown"
                 role="button" 
                 aria-haspopup="true" 
                 aria-expanded="false">
