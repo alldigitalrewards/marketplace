@@ -9,7 +9,6 @@ use App\Traits;
 Class Transaction extends \Zewa\Controller {
     
     use Traits\GenericTrait;
-    use Traits\CartTrait;
     use Traits\UserTrait;
     
     public function __construct() 
