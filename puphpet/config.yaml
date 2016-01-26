@@ -306,7 +306,7 @@ hhvm:
 mariadb:
     install: '1'
     settings:
-        version: '10.1'
+        version: '10.0'
         root_password: developer
         override_options: {  }
     adminer: 0

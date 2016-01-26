@@ -4,9 +4,13 @@
  * Modules
  */
 return [
-    'defaultModule' => 'Merchandise',
-    'Merchandise' => [
-        'defaultController' => 'Product',
+    'defaultModule' => 'Home',
+    'Home' => [
+        'defaultController' => 'Controller',
+        'defaultMethod' => 'index'
+    ],
+    'Reward' => [
+        'defaultController' => 'View',
         'defaultMethod' => 'index'
     ],
     'Redemption' => [

@@ -7,7 +7,7 @@
 return [
     'default' => [
         'dsn' => 'mysql:host=localhost;dbname=developer',
-        'user' => 'developer',
+        'user' => 'root',
         'pass' => 'developer'
     ]
 ];

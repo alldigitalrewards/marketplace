@@ -94,31 +94,31 @@
        /*
             Fetch the cart preview
        */
-       $.get(baseURL + 'merchandise/ajax/fetchCartPreview', function(response) {
-           
-            if (typeof response.cartPreview !== 'undefined') {
-                
-                $('#cart-preview').html(response.cartPreview);
-                
-            }
-            
-        },'json'); 
+       //$.get(baseURL + 'merchandise/ajax/fetchCartPreview', function(response) {
+       //
+       //     if (typeof response.cartPreview !== 'undefined') {
+       //
+       //         $('#cart-preview').html(response.cartPreview);
+       //
+       //     }
+       //
+       // },'json');
         
         /*
             Fetch cart preview if there is a preview table on the current page
             NOTE: this is used in the checkout process
         */
-        if ($('#cart-review').length) {
-            
-            $.get(baseURL + 'merchandise/ajax/fetchCartReview', function(response) {
-                
-                if (typeof response.cartReview !== 'undefined') {
-                    $('#cart-review').html(response.cartReview);
-                }
-                
-            },'json');
-            
-        }
+        //if ($('#cart-review').length) {
+        //
+        //    $.get(baseURL + 'merchandise/ajax/fetchCartReview', function(response) {
+        //
+        //        if (typeof response.cartReview !== 'undefined') {
+        //            $('#cart-review').html(response.cartReview);
+        //        }
+        //
+        //    },'json');
+        //
+        //}
         
         /*
             Automatically submit quantity input forms
@@ -137,3 +137,15 @@
     });
     
 }(jQuery,document);
+
+$(document).ready(function() {
+    $('#list').click(function(event){
+        event.preventDefault();
+        $('.reward-list .item').addClass('list-group-item');
+    });
+    $('#grid').click(function(event){
+        event.preventDefault();
+        $('.reward-list .item').removeClass('list-group-item');
+        $('.reward-list .item').addClass('grid-group-item');
+    });
+});

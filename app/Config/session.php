@@ -15,5 +15,6 @@ return [
     'lockToIP' => false,
     'gcProbability' => 1,
     'gcDivisor' => 100,
-    'tableName' => 'Session'
+    'tableName' => 'Session',
+    'domain'    => 'marketplace.client'
 ];

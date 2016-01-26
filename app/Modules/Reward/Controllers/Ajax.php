@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Merchandise\Controllers;
+namespace App\Modules\Reward\Controllers;
 
 use Zewa\View;
 use App\Models;
@@ -187,32 +187,6 @@ Class Ajax extends \Zewa\Controller {
         ]);
     }
 
-    public function searchRewards()
-    {
-        $merch = new Models\Merchandise();
-        $page = $this->request->get('rewardPage');
-        $offset = $this->request->get('rewardOffset');
-
-        $filters = [
-            'title' => $this->request->get('rewardTitle'),
-            'priceMin' => $this->request->get('priceMin'),
-            'priceMax' => $this->request->get('priceMax')
-        ];
-
-        $categoryIds = $this->request->get('categoryIds');
-        if ($categoryIds) {
-            $filters['categoryIds'] = array_values((array)$categoryIds);
-        }
-
-        $this->data['rewards'] = $merch->fetchRewards($page, $offset, $filters);
-        $this->data['feedURL'] = $this->configuration->api->feed_url;
-        $view = new View();
-        $view->setView('partial/rewards');
-        $view->setLayout('vanilla');
-        $view->setProperty($this->data);
-
-        return $view->render();
-    }
     
     private function createUserCartIfNone() 
     {

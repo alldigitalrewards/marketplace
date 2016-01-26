@@ -4,6 +4,8 @@
 .bash_history
 .cache
 .viminfo
+.mysql_history
+.local
 
 # Logs
 access.log
