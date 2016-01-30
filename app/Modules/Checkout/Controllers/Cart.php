@@ -2,157 +2,264 @@
 
 namespace App\Modules\Checkout\Controllers;
 
+use App\Classes\AbstractController;
 use App\Models;
+use App\Modules\Transaction\Controllers\Create;
 use App\Traits;
 
-Class Cart extends \Zewa\Controller {
+Class Cart extends AbstractController
+{
 
-    public $data;
+    use Traits\GenericTrait;
+    use Traits\UserTrait;
 
     public function __construct()
     {
         parent::__construct();
-        $this->data = [];
-        $this->merch = new Models\Merchandise();
         $this->cart = new Models\Cart();
-        $this->permission = $this->request->session('user') ? 1 : 0;
-        $this->data['feedUrl'] = $this->configuration->api->feed_url;
-        $this->data['categories'] = $this->merch->fetchCategoriesAndProducts();
-        $this->data['search'] = $this->request->get('q','');
-        $this->data['isLoggedIn'] = $this->permission;
-        if (!$this->permission) {
-            $this->router->redirect($this->router->baseURL('account/home'));
-        }
     }
 
-    private function createUserCartIfNone()
+//    public function preview()
+//    {
+//        $this->data['cart'] = $this->request->session('cart');
+
+//        $view = new \Zewa\View();
+//        $view->setProperty($this->data);
+//        $view->setLayout('vanilla');
+//        $view->setModule('checkout');
+//        $view->setView('preview');
+//        return $view->render();
+//    }
+
+    public function review()
     {
-        $cartModel = new Models\Cart;
-        $userModel = new Models\User;
-        $user = $this->request->session('user');
+        if(!$this->logged) {
+            $this->request->setFlashdata('notice', (object) [
+                'type' => 'warning',
+                'message' => _("You must be logged in to checkout") . ' <a data-target="#loginModal" data-toggle="modal" href="javascript:void(0)">' . _("Click here to login") . '</a>'
+            ]);
+            $this->router->redirect($this->router->baseURL('?r=' . base64_encode(urlencode($this->router->uri))));
+        }
 
-        if (empty($user['cart_id'])) {
+        $cart = $this->request->session('cart');
+        $user = $this->request->session('user');;
+        $total = $this->total();
 
-            $response = $cartModel->create($user['unique_id']);
-            $cartId = $response->cartId;
-            $user['cart_id'] = $cartId;
+        $stripe = $this->configuration->stripe;
+
+        \Stripe\Stripe::setApiKey($stripe->secret_key);
+        $this->data['requiredCheckoutAmendments'] = [];
+
+        if($this->request->post()) {
+            $updatedQuantities = $this->request->post("quantity");
+            foreach($cart as $key => $c) {
+                foreach($updatedQuantities as $reward => $quantity) {
+                    if($c->id == $reward) {
+                        $cart[$key]->cart_quantity = $quantity;
+                        continue;
+                    }
+                }
+            }
+
+            $user->terms = $this->request->post('terms', false);
+            $user->shipping = (object) $this->request->post('shipping_address');
+
+            $this->request->setSession('cart', $cart);
             $this->request->setSession('user', $user);
-            $userModel->updateCartId($user['id'], $cartId);
 
-        } else {
+            if (!$this->validateAddress($this->request->post('shipping_address'))) {
+                $this->request->setFlashdata('notice', (object) ['type' => 'warning', 'message' => _("Please provide a valid shipping address")]);
+                $this->router->redirect($this->router->currentURL());
+            }
 
-            $cartId = $user['cart_id'];
+            $ready = true;
+            $msg = false;
+
+            if (!$this->validateAddress((array)$user->shipping)) {
+
+                $ready = false;
+                $msg = _("You must provide a valid shipping address");
+            }
+
+            if (isset($user->terms) && $user->terms !== 'on') {
+
+                $ready = false;
+                $msg = _("Please click the checkbox to confirm your shipping address");
+            }
+
+
+            $token  = $this->request->post('stripeToken', false);
+
+            if($ready === true) {
+                $deductCredit = true;
+                if($token !== false) {
+                    $deductCredit = false;
+                    $customer = \Stripe\Customer::create(array(
+                        'email' => $user->email, //'customer@example.com',
+                        'card'  => $token
+                    ));
+
+                    $charge = \Stripe\Charge::create(array(
+                        'customer' => $customer->id,
+                        'amount'   => bcmul(($total / 1000), 100),
+                        'currency' => 'usd'
+                    ));
+
+                    if(!is_null($charge->failure_code)) {
+                        $ready = false;
+                        $msg = _("You lack the credits to continue");
+                    }
+                } else {
+
+                    if (bcsub($user->credits, $total, 2) < 0) {
+                        $ready = false;
+                        $msg = _("You lack the credits to continue");
+                    }
+
+                }
+
+            }
+
+            if($ready === true) {
+
+                if (isset($user->terms)) {
+                    unset($user->terms);
+                    $this->request->setSession('user', $user);
+                }
+
+                $createTransaction = new \App\Modules\Transaction\Controllers\Create($deductCredit);
+                if($createTransaction) {
+                    $this->router->redirect($this->router->baseURL('transaction/complete'));
+                } else {
+                    $this->request->setFlashdata('notice', (object)['type' => 'warning', 'message' => _("We were unable to process your transaction, please try again. If the problem persist, please contact csr@alldigitalrewards.com")]);
+                    $this->router->redirect($this->router->baseURL('checkout/cart/review'));
+                }
+            } else {
+                $this->request->setFlashdata('notice', (object) ['type' => 'warning', 'message' => $msg]);
+                $this->router->redirect($this->router->currentURL());
+            }
 
         }
 
-        return $cartId;
+        $this->data['shipping'] = $user->shipping;
+
+        $view = new \Zewa\View();
+        $view->setProperty($this->data);
+        $view->setLayout('marketplace');
+        $view->setModule('checkout');
+        $view->setView('review');
+        return $view->render();
+    }
+
+    public function total()
+    {
+        $cart = $this->request->session('cart');
+
+        $total = 0.00;
+        if(!empty($cart)) {
+            foreach($cart as $reward) {
+                for($i = 0; $i < $reward->cart_quantity; $i++) {
+                    $total = bcadd($total, $reward->credit_cost, 2);
+                }
+            }
+        }
+
+        return $total;
     }
 
     public function add($rewardId)
     {
-        if (!$this->permission) {
-            $this->request->set_flashdata('notice', ['type' => 'warning', 'msg' => _("The reward has been added to your cart")]);
-            $this->router->redirect($this->router->currentURL());
-        }
-
-//        Remove redemption data from session
-        $this->request->setSession('redemption', []);
-
-        $user = $this->request->session('user');
-        $cartId = $this->createUserCartIfNone();
-
-        $cart = $this->cart->fetchById($user['unique_id'], $cartId);
-
-        $ids = $cart['ids'];
+        $cart = $this->request->session('cart');
+        $title = "";
         //If the prize is already in cart then increment quantity
-        if (array_search($rewardId, $ids)) {
-            $counts = array_count_values($ids);
+        $existingCardRewardIds = [];
+        if(!empty($cart)) {
+            foreach($cart as $c) {
+                for($i = 0; $i < $c->cart_quantity; $i++) {
+                    $existingCardRewardIds[] = $c->id;
+                }
+            }
+        }
+
+        $counts = array_count_values($existingCardRewardIds);
+        $newQuantity = $this->request->get('quantity', 1);
+        if(!empty($counts[$rewardId]) && !$this->request->get('quantity')) {
             $newQuantity = $counts[$rewardId] + 1;
-            return $this->updateProductQuantity($rewardId, $newQuantity);
         }
 
-        //Add reward to cart
-        $ids[] = $rewardId;
-        $this->cart->updateById($user['unique_id'], $cartId, $ids);
-        $this->request->set_flashdata('notice', ['type' => 'success', 'msg' => _("The reward has been added to your cart")]);
-        $this->router->redirect($this->router->currentURL());
-    }
+        $cart = $this->updateCart($existingCardRewardIds, $rewardId, $newQuantity);
 
-    public function removeFromCart($productId)
-    {
-        if (!$this->permission) {
-            $this->router->redirect($this->router->baseURL('account/home'));
-        }
-
-        $user = $this->request->session('user');
-        $cartId = $this->createUserCartIfNone();
-        $cart = $this->cart->fetchById($user['unique_id'], $cartId);
-        $ids = $cart['ids'];
-
-        foreach($ids as $key => $value) {
-
-            if ($value === $productId) {
-                unset($ids[$key]);
+        if(!empty($cart)){
+            foreach($cart as $c) {
+                if($c->id == $rewardId) {
+                    $title = $c->title;
+                }
             }
-
         }
 
-        //If the cart is empty then delete it; otherwise update it.
-        if (empty($ids)) {
-            $this->cart->deleteById($user['unique_id'], $cartId);
-            $user['cart_id'] = false;
-            $this->request->setSession('user', $user);
-        } else {
-            $this->cart->updateById($user['unique_id'], $cartId, array_values($ids));
-        }
-
-        return json_encode([
-            'success' => true,
-            'message' => 'Item was removed from your cart',
-            'cartPreview' => $this->fetchCartPreview(0),
-            'cartReview' => $this->fetchCartReview(0)
+        $this->request->setSession('cart', $cart);
+        $this->request->setFlashdata('notice', (object) [
+            'type' => 'success',
+            'message' => $title . ' ' . _("has been added to your cart!") . ' <a href=" ' . $this->router->baseURL('checkout/cart/review') . ' ">' . _("Click here to checkout") . '</a>'
         ]);
+
+        $this->redirect();
     }
 
-    public function updateProductQuantity($productId, $quantity = false)
+    public function remove($rewardId)
     {
-        if (!$this->permission) {
-            $this->router->redirect($this->router->baseURL('account/home'));
-        }
 
-        $quantity = $this->request->post('quantity', $quantity);
+        $cart = $this->request->session('cart');
 
-        if ($quantity === false) {
-            return json_encode([
-                'success' => false,
-                'message' => 'Item quantity is required'
-            ]);
-        }
-
-        $user = $this->request->session('user');
-        $cartId = $this->createUserCartIfNone();
-        $cart = $this->cart->fetchById($user['unique_id'], $cartId);
-        $ids = $cart['ids'];
-
-        //Remove all instances of this product's ID from the product IDs array
-        foreach($ids as $key => $value) {
-            if ($value === $productId) {
-                unset($ids[$key]);
+        foreach($cart as $key => $reward) {
+            if ($reward->id === $rewardId) {
+                unset($cart[$key]);
             }
         }
+        $this->request->setSession('cart', $cart);
+        $this->request->setFlashdata('notice', (object) ['type' => 'success', 'message' => _("The reward has been removed from your cart")]);
+        $this->redirect();
+    }
 
-        //Add a fixed amount of this ID back into the IDs array
+    private function updateCart($existingCardRewardIds, $rewardId, $quantity = false)
+    {
+
+        $cartIds = $existingCardRewardIds;
+
         for($i = 0; $i < $quantity; $i++) {
-            $ids[] = $productId;
+            $cartIds[] = $rewardId;
         }
 
-        $this->cart->updateById($user['unique_id'],$cartId,array_values($ids));
+        $unique = array_unique($cartIds);
 
-        return json_encode([
-            'success' => true,
-            'message' => 'Item quantity was updated',
-            'cartPreview' => $this->fetchCartPreview(0),
-            'cartReview' => $this->fetchCartReview(0)
-        ]);
+        $merchandise = new Models\Merchandise();
+        $rewards = $merchandise->fetchRewards(1, 50, ['rewardIds' => $unique])->results;
+
+
+        $cart = [];
+        foreach($cartIds as $key => $value) {
+            foreach($rewards as $reward) {
+                if($reward->id == $value) {
+                    $reward->cart_quantity = $quantity;
+                    $cart[$reward->id] = $reward;
+                    continue;
+                }
+            }
+        }
+
+
+        return $cart;
+    }
+
+    private function redirect()
+    {
+        $redirect = $this->request->get('r', false);
+
+        if($redirect !== false) {
+            $redirect = urldecode(base64_decode($redirect));
+        } else {
+            $redirect = $this->router->baseURL();
+        }
+        $this->router->redirect($redirect);
     }
 }

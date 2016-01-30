@@ -2,46 +2,45 @@
 
 namespace App\Modules\Account\Controllers;
 
+use App\Classes\AbstractController;
 use Zewa\View;
 use App\Models;
 use App\Traits;
 
-Class Home extends \Zewa\Controller {
+Class Home extends AbstractController {
     
     use Traits\InputHelper;
     
-    public $data;
+//    public $data;
     
     public function __construct()
     {
         parent::__construct();
-        $this->data = [];
-        $this->merch = new Models\Merchandise();
-        $this->permission = $this->request->session('user') ? 1 : 0;
-        $this->data['feedUrl'] = $this->configuration->api->feed_url;
-        $this->data['categories'] = $this->merch->fetchCategoriesAndProducts();
-        $this->data['search'] = $this->request->get('q','');
-        $this->data['isLoggedIn'] = $this->permission;
+//        $this->data = [];
+//        $this->merch = new Models\Merchandise();
+//        $this->permission = $this->request->session('user') ? 1 : 0;
+//        $this->data['feedUrl'] = $this->configuration->api->feed_url;
+//        $this->data['categories'] = $this->merch->fetchCategoriesAndProducts();
+//        $this->data['search'] = $this->request->get('q','');
+//        $this->data['isLoggedIn'] = $this->permission;
     }
 
     public function index()
     {
-        if (!$this->permission) {
-            return $this->login();
-        }
-        
+        $this->handleAuthentication();
+
         $transactionModel = new Models\Transaction;
-        $userModel = new Models\User;
-        $userData = $this->request->session('user');
-        $userData = $userModel->fetchUserByUniqueId($userData['unique_id']);
+//        $userModel = new Models\User;
+//        $userData = $this->request->session('user');
+//        $userData = $userModel->fetchUserByUniqueId($userData['unique_id']);
 //        var_dump($userData);die();
-        $this->data['user'] = $userData;
-        $this->data['stateOptions'] = $this->fetchStateOptions($userData->state);
-        $this->data['noTransactions'] = empty($transactionModel->fetchPaginated($userData->unique_id));
+//        $this->data['user'] = $userData;
+//        $this->data['stateOptions'] = $this->fetchStateOptions($userData->state);
+//        $this->data['noTransactions'] = empty($transactionModel->fetchPaginated($userData->unique_id));
         
         $view = new View();
         $view->setLayout('marketplace');
-        $view->setView('overview');
+        $view->setView('dashboard');
         $view->setProperty($this->data);
         return $view->render();
     }
@@ -57,10 +56,6 @@ Class Home extends \Zewa\Controller {
     
     public function logout() 
     {
-        if (!$this->permission) {
-            die('Oops! Wrong page');
-        }
-        
         $this->request->destroySession();
         $this->router->redirect('account/home/login');
     }

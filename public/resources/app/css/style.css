@@ -1,19 +1,22 @@
 body {
   color:#525252;
+  font-family: 'Open Sans', sans-serif;
 }
 .logo-link {
-  height: 120px;
+  /*height: 120px;*/
   /*max-width: 100%;*/
   overflow: visible;
 }
 .logo-link img {
   height:80px;
   /*width:100%;*/
-  margin: 5px 0;
+  margin: 25px 0 0 0;
 }
-
+.well {
+  padding:5px 10px
+}
 .gray-bg {
-  margin:40px 0;
+  margin:20px 0 40px 0;
   background-color: #909295;
   font-weight:bold;
 }
@@ -47,6 +50,9 @@ body {
 .gray-bg .navbar a {
   color:#fff;
 }
+.gray-bg .nav > li > a:focus, .gray-bg .nav > li > a:hover {
+  background-color: #5e5e5e!important;
+}
 .welcome-stationary {
 }
 .welcome-stationary img {
@@ -74,6 +80,7 @@ body {
 }
 .truncate {
   width:100%;
+  display:block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -271,4 +278,93 @@ footer {
 }
 .loader {
   margin:10% 40%;
+}
+
+.no-gutter > [class*='col-'] {
+  padding-right:0;
+  padding-left:0;
+}
+
+.cart-preview {
+  padding:2px 0.8em;
+}
+.cart-preview img {
+  width:100%;
+}
+.cart-listing { border-bottom:1px solid #e9e9e9; padding-top:5px; padding-bottom:5px;}
+
+.pay-with-card {
+   background-color: #ececec;
+   color: #5e5e5e;
+   padding:10px 0;
+ }
+.pay-with-card h4, .pay-with-points h4 {
+  font-size:2.5em;
+}
+.pay-with-points {
+  background-color:#337ab7;
+  color:#fff;
+  padding:10px 0;
+}
+.btn[disabled], button[disabled], input[disabled] {
+  cursor:pointer;
+}
+.featured-rewards .nav-tabs li:hover, .featured-rewards .nav-tabs li.active {
+  background:#fff !important;
+}
+
+.no-bullets {
+  list-style-type:none;
+  list-style-position:inside;
+  margin:0;
+  padding:0;
+}
+.no-bullets .fa-plus {
+}
+.no-bullets li {
+  overflow:hidden;
+}
+.no-bullets li.question {
+  margin-bottom:8px;
+}
+.no-bullets li.question ol, .no-bullets li.question ul {
+  margin:0; padding:0;
+}
+.no-bullets > li.question > div {
+  clear:both;
+  margin:1.5em;
+  display:none;
+}
+.no-bullets li.question > strong {
+  cursor:pointer;
+  text-decoration:none;
+  /*color:#0d74b9!important;*/
+  display:block;
+  float:left;
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.no-bullets li > strong:hover {
+  text-decoration:underline;
+}
+.collapse-indicator i {
+  color:#a6a6a6;
+}
+.collapse-indicator {
+  cursor:pointer;
+  border:1px solid #a6a6a6;
+  padding:5px;
+  -webkit-border-radius: 3em;
+  -moz-border-radius: 3em;
+  border-radius: 3em;
+  font-size:0.7em;
+  /*position:relative;*/
+  /*top:-0.2em;*/
+  float:right;
+  /*display:inline-block;*/
+}
+ol {
+  margin-bottom:30px;
 }

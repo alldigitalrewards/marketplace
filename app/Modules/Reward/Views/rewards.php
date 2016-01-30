@@ -12,6 +12,7 @@ $this->addJS([
      data-paginate-container=""
      data-paginate-touchy="400"
      data-paginate-query-prefix="reward"
+     data-paginate-page="<?=$this->request->get('rewardPage', 0);?>"
      data-paginate-per-page="12"
      data-paginate-url="<?=$this->baseURL('reward/view');?>">
         <div class="paginated-search">

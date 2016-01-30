@@ -4,6 +4,7 @@
  */
 return [
 
+    'content/contact/complete' => 'content/contact/index/complete',
     'reward/view/(\d+)' => 'reward/view/index/$1',
 
     /* Reward API */

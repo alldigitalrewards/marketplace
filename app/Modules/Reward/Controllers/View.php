@@ -3,20 +3,14 @@
 namespace App\Modules\Reward\Controllers;
 
 //use Zewa\View;
+use App\Classes\AbstractController;
 use App\Models;
 
-Class View extends \Zewa\Controller {
-
-    public $data;
-    private $merch;
-
+Class View extends AbstractController
+{
     public function __construct()
     {
         parent::__construct();
-        $this->data = [];
-        $this->merchandise = new Models\Merchandise();
-        $this->permission = $this->request->session('user') ? 1 : 0;
-        $this->data['feedURL'] = $this->configuration->api->feed_url;
     }
 
     public function index($rewardId = false)
@@ -29,6 +23,7 @@ Class View extends \Zewa\Controller {
         if($rewardId !== false) {
             $view = $this->rewardSingle($rewardId);
         } else {
+            $this->data['categoryIds'] = $this->request->post('categoryIds', []);
             $view = $this->rewardSet();
         }
 
@@ -53,12 +48,12 @@ Class View extends \Zewa\Controller {
             $filters['categoryIds'] = array_values((array)$categoryIds);
         }
 
-        $this->data['rewards'] = $merchandise->fetchRewards($page, $offset, $filters);
-        $this->data['count'] = (int) $this->data['rewards']->count;
+        $rewards = $merchandise->fetchRewards($page, $offset, $filters);
+        $this->data['rewards'] = $rewards->results;
+        $this->data['count'] = (int) $rewards->count;
         $this->data['last'] = ($page * $offset) >= $this->data['count'];//($this->data['count'] - $offset);
         $this->data['first'] = ($page == 1);
 
-        unset($this->data['rewards']->count);
         $this->data['feedURL'] = $this->configuration->api->feed_url;
         $view = new \Zewa\View();
         $view->setView('reward-set');

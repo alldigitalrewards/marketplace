@@ -15,36 +15,49 @@
 <div class="container featured-rewards">
     <div class="row">
         <div class="col-sm-9">
-            <h3><?=_("Featured Rewards");?></h3>
             <div class="row">
-                <?php if(!empty($featuredProducts)): ?>
-                        <?php foreach($featuredProducts as $reward): ?>
-                            <div class="col-sm-3 item">
-                                <div class="img-container">
-                                    <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
-                                        <?php if($reward->image_processed): ?>
-                                            <img src="<?=$feedURL.$reward->image_full;?>" alt="Reward">
-                                        <?php else: ?>
-                                            <img src="<?=$feedURL.'no-image.jpg'?>" alt="Reward">
-                                        <?php endif; ?>
-                                    </a>
-                                </div>
-                                <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
-                                <div class="product-price">
-                                    <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
-                                </div>
-                                <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                    <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
-                                </a>
+                <div class="col-xs-12">
+
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#featured-rewards" aria-controls="featured-rewards" role="tab" data-toggle="tab"><?=_("Featured Rewards");?></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="featured-rewards">
+                            <div class="row">
+                                <?php if(!empty($featuredProducts)): ?>
+                                    <?php foreach($featuredProducts as $reward): ?>
+                                        <div class="col-sm-3 item">
+                                            <div class="img-container">
+                                                <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
+                                                    <?php if($reward->image_processed): ?>
+                                                        <img src="<?=$feedURL.$reward->image_full;?>" alt="Reward">
+                                                    <?php else: ?>
+                                                        <img src="<?=$feedURL.'no-image.jpg'?>" alt="Reward">
+                                                    <?php endif; ?>
+                                                </a>
+                                            </div>
+                                            <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
+                                            <div class="product-price">
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                            </div>
+                                            <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
+                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                            </a>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="col-xs-12">
+                                        <p class="alert alert-info"><?=_("No rewards are available at this time");?></p>
+                                    </div>
+                                <?php endif; ?>
+
+
                             </div>
-                        <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="col-xs-12">
-                        <p class="alert alert-info"><?=_("No rewards are available at this time");?></p>
+                        </div>
                     </div>
-                <?php endif; ?>
-
-
+                </div>
             </div>
         </div>
         <div class="col-sm-3">
@@ -76,7 +89,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -89,7 +102,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
@@ -110,7 +123,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -123,7 +136,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
@@ -144,7 +157,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -157,7 +170,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
@@ -178,7 +191,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -191,7 +204,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
@@ -212,7 +225,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -225,7 +238,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
@@ -280,7 +293,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -293,7 +306,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
@@ -314,7 +327,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -327,7 +340,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
@@ -348,7 +361,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -361,7 +374,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
@@ -382,7 +395,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -395,7 +408,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
@@ -416,7 +429,7 @@
 
                             <div class="row">
                                 <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -429,7 +442,7 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="reward-price">
-                                                <span class="normal-price"><?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
                                                 <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>

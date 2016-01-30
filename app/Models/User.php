@@ -12,72 +12,62 @@ Class User extends Base
         parent::__construct();
     }
     
-    public function create($data, $role = false)
+    public function create($user)
     {
-        if (!$role) {
-            $role = USER_ID;
-        }
         
         //The user's shared ID between servers
-        $uniqueId = hexdec(substr(sha1($data['email_address']), 0, 15));
+        $uniqueId = hexdec(substr(sha1($user['email_address']), 0, 15));
         
         //Create user on remote server
-        $result = json_decode($this->rewards->createUser([
+        $aUser = [
             'unique_id' => $uniqueId,
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'email_address' => $data['email_address'],
-            'password' => $data['password'],
-            'credit' => 25000,
-            'role' => $role
-        ]));
+            'firstname' => $user['firstname'],
+            'lastname' => $user['lastname'],
+            'email_address' => $user['email_address'],
+            'password' => $user['password'],
+            'role' => USER_ID
+        ];
+        $result = json_decode($this->rewards->createUser($aUser));
 
         if ($result->success === false) {
             return $result;
         }
+        unset($aUser['role']);
         
         //Create user locally
-        $sql = 'INSERT INTO User (unique_id,firstname,lastname,email_address,password) '
-             . 'VALUES (?,?,?,?,?)';
+        $sql = 'INSERT INTO User (unique_id, firstname, lastname, email_address, password, credits) VALUES (?,?,?,?,?,?)';
+
+        $aUser['password'] = sha1($aUser['password']);
         
-        $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT, ['cost' => 11]);
-        
-        $arguments = [];
-        $arguments[] = $uniqueId;
-        $arguments[] = $data['firstname'];
-        $arguments[] = $data['lastname'];
-        $arguments[] = $data['email_address'];
-        $arguments[] = $data['password'];
-        
-        $this->modify($sql,$arguments);
+        $arguments = [$aUser['unique_id'], $aUser['firstname'], $aUser['lastname'], $aUser['email_address'], $aUser['password'], 25000];
+
+        $this->modify($sql, $arguments);
         $userId = $this->dbh->lastInsertId();
         
         return true;
     }
     
     public function authenticate($email,$password) 
-    {    
-        $sql = 'SELECT * FROM User WHERE email_address = ? LIMIT 1';
-        $query = $this->dbh->prepare($sql);
-        $query->execute([$email]);
-        $user = $query->fetch();
-        
-        if (empty($user)) {
-            return false;
-        }
-        
-        if(!password_verify($password,$user['password'])) {
-            return false;
-        }
-        
-        return $user;
+    {
+        $sql = 'SELECT * FROM User WHERE email_address = ? AND password = ?';
+        return $this->fetch($sql, [$email, sha1($password)], 'row');
     }
     
     public function fetchUserByUniqueId($uniqueId)
     {
         return json_decode($this->rewards->getUser($uniqueId));
     }
-    
+
+    public function updateUser($uniqueId, $data)
+    {
+        $sql = 'UPDATE User SET credits = ?, shipping = ? WHERE unique_id = ?';
+        $arguments = [$data['credits'], $data['shipping'], $uniqueId];
+//        print_r($sql);
+//        var_dump($arguments);
+//        die();
+        return $this->modify($sql, $arguments);
+    }
+//updateUser
     public function updateUserByUniqueId($uniqueId, $data) 
     {
         if (!empty($data['firstname']) && !empty($data['lastname']) && !empty($data['email_address'])) {
@@ -108,8 +98,8 @@ Class User extends Base
 
         return $result->success;
     }
-    
-    public function updateCartId($userId,$cartId) 
+
+    public function updateCartId($userId,$cartId)
     {
         $sql = 'UPDATE User SET cart_id = ? WHERE id = ?';
         return $this->modify($sql, [$cartId,$userId]);

@@ -2,7 +2,7 @@
     <?php foreach($rewards as $reward): ?>
         <div class="col-sm-3 item">
             <div class="img-container">
-                <a href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>">
+                <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
                     <?php if($reward->image_processed): ?>
                     <img src="<?=$feedURL.$reward->image_full;?>" />
                     <?php else: ?>
@@ -20,10 +20,10 @@
                     </div>
                     <br /><br />
                 </div>
-            <span class="label label-success x2 pull-left">
+            <span class="label label-default x2 pull-left">
                 <i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?>
             </span>
-                <a class="btn btn-primary pull-right" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>">
+                <a class="btn btn-primary pull-right" href="<?=$this->baseURL('checkout/cart/add/' . $reward->id . '?r=' . base64_encode(urlencode($this->currentURL())))?>">
                     <i class="fa fa-shopping-cart"></i> <span class="add-to-cart"><?=_("Add to cart");?></span>
                 </a>
             </div>
