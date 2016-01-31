@@ -21,10 +21,10 @@
                     <br /><br />
                 </div>
             <span class="label label-default x2 pull-left">
-                <i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?>
+                <i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?>
             </span>
                 <a class="btn btn-primary pull-right" href="<?=$this->baseURL('checkout/cart/add/' . $reward->id . '?r=' . base64_encode(urlencode($this->currentURL())))?>">
-                    <i class="fa fa-shopping-cart"></i> <span class="add-to-cart"><?=_("Add to cart");?></span>
+                    <i class="fa fa-shopping-cart"></i> <span class="add-to-cart"> <?=_("Add to cart");?></span>
                 </a>
             </div>
         </div>

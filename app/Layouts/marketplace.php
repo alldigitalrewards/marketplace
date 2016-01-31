@@ -35,34 +35,44 @@ $this->addJS([
                 <img alt="" src="<?=$this->baseURL('resources/app/images/logo.png');?>" />
             </a>
         </div>
-        <div class="col-xs-5">
+        <div class="col-md-5 col-sm-4 hidden-xs">
             <br /><br />
             <form action="<?=$this->baseURL('reward/view')?>">
                 <div class="input-group">
                     <input id="product-search-bar" name="title" class="form-control" placeholder="<?=_("Search rewards...");?>" value="<?=(!empty($search) ? $search : '')?>"/>
                     <span class="input-group-btn">
                         <button class="btn btn-primary" type="submit">
-                            <?=_("Search");?>
+                            <div class="hidden-sm">
+                                <?=_("Search");?>
+                            </div>
+                            <div class="hidden-xs hidden-md hidden-lg">
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
                         </button>
                     </span>
                 </div>
             </form>
         </div>
-        <?php if($user): ?>
-        <div class="col-xs-2 text-right">
-            <br /><br />
-            <?=_("Welcome");?> <a href="<?=$this->baseURL('account');?>"><strong><?=$user->firstname;?></strong></a> <br />
-            <?=_("Balance");?>: <strong><?=number_format($user->credits, 0, '', ',');?></strong>
-        </div>
-        <?php else:?>
-            <div class="col-xs-2">
+        <div class="col-md-4 col-sm-5 col-xs-6 col-xs-offset-3 col-sm-offset-0 text-right">
+            <div class="row">
+                <?php if($user): ?>
+                    <div class="col-xs-6 col-md-6">
+                        <br /><br />
+                        <?=_("Welcome");?> <a href="<?=$this->baseURL('account');?>"><strong><?=$user->firstname;?></strong></a> <br />
+                        <?=_("Balance");?>: <strong><?=number_format($user->credits, 0, '', ',');?></strong>
+                    </div>
+                <?php else:?>
+                    <div class="col-xs-6 col-md-6">
+                    </div>
+                <?php endif;?>
+                <div class="col-xs-6 col-md-6">
+                    <br /><br />
+                    <a href="javascript:void(0);" class="cart" data-container="body" data-toggle="popover" data-placement="bottom"><?=_("View Cart");?> <i class="fa fa-fw fa-shopping-cart"></i></a>
+                    <br />
+                    <a href="<?=$this->baseURL('checkout/cart/review');?>"><?=_("Checkout Now");?></a>
+                </div>
             </div>
-        <?php endif;?>
-        <div class="col-xs-2 text-right">
-            <br /><br />
-            <a href="javascript:void(0);" class="cart" data-container="body" data-toggle="popover" data-placement="bottom"><?=_("View Cart");?> <i class="fa fa-fw fa-shopping-cart"></i></a>
-            <br />
-            <a href="<?=$this->baseURL('checkout/cart/review');?>"><?=_("Checkout Now");?></a>
+
         </div>
     </div>
 
@@ -75,12 +85,31 @@ $this->addJS([
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only"><?=_("Toggle navigation");?></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <i class="fa fa-fw fa-bars"></i>
                     </button>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
+
+
+                    <div class="hidden-sm hidden-md hidden-lg">
+
+                        <form action="<?=$this->baseURL('reward/view')?>">
+                            <div class="input-group">
+                                <input id="product-search-bar" name="title" class="form-control" placeholder="<?=_("Search rewards...");?>" value="<?=(!empty($search) ? $search : '')?>"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <div class="hidden-sm">
+                                    <?=_("Search");?>
+                                </div>
+                                <div class="hidden-xs hidden-md hidden-lg">
+                                    <i class="fa fa-arrow-right"></i>
+                                </div>
+                            </button>
+                        </span>
+                            </div>
+                        </form>
+                    </div>
+
                     <ul class="nav navbar-nav" >
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=_("Categories");?> <span class="caret"></span></a>
@@ -148,18 +177,16 @@ $this->addJS([
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="col-md-8">
-                    <ul>
-                        <li><a href="<?=$this->baseURL('content/contact');?>"><?=_("Contact Us");?></a></li>
-                        <li><a href="<?=$this->baseURL('content/privacy');?>"><?=_("Privacy Policy");?></a></li>
-                        <li><a href="<?=$this->baseURL('content/terms');?>"><?=_("Terms");?></a></li>
-                        <li><a href="<?=$this->baseURL('content/about');?>"><?=_("About Us");?></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <p class="text-right">&copy; <?=date('Y');?> <?=_("All Digital Rewards.");?> <?=_("All Rights Reserved");?></p>
-                </div>
+            <div class="col-sm-12 col-md-8">
+                <ul>
+                    <li><a href="<?=$this->baseURL('content/contact');?>"><?=_("Contact Us");?></a></li>
+                    <li><a href="<?=$this->baseURL('content/privacy');?>"><?=_("Privacy Policy");?></a></li>
+                    <li><a href="<?=$this->baseURL('content/terms');?>"><?=_("Terms");?></a></li>
+                    <li><a href="<?=$this->baseURL('content/about');?>"><?=_("About Us");?></a></li>
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <p class="copy">&copy; <?=date('Y');?> <?=_("All Digital Rewards.");?> <?=_("All Rights Reserved");?></p>
             </div>
         </div>
     </div>
@@ -256,6 +283,18 @@ $this->addJS([
         </div>
     </div>
 </div>
+
+<?php else: ?>
+
+    <div class="modal modal-info fade ajax-modal" id="transactionModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 <?php endif;?>
 
 <?php if($cart): ?>
@@ -287,7 +326,7 @@ $this->addJS([
                         </div>
 
                         <div class="col-xs-7 text-right">
-                            <i class="fa fa-tag"></i> <?=number_format(bcmul($reward->credit_cost, $reward->cart_quantity), 0, '', ',');?>
+                            <i class="fa fa-dollar"></i> <?=number_format(bcmul($reward->credit_cost / 1000, $reward->cart_quantity), 2, '.', ',');?>
                         </div>
 
                         <div class="col-xs-2">
@@ -310,17 +349,6 @@ $this->addJS([
         <a href="<?=$this->baseURL('checkout/cart/review');?>" class="btn btn-block btn-primary"><?=_("Checkout");?></a>
     </div>
 </div>
-<?php else: ?>
-
-    <div class="modal modal-info fade ajax-modal" id="transactionModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
 <?php endif; ?>
 
 <script src="https://checkout.stripe.com/checkout.js"></script>

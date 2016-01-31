@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-md-5">
+        <div class="col-xs-12 col-sm-5">
             <div class="welcome-area">
                 <p><span class="x2 blue"><?=_("Welcome");?></span> <?=_("to your Reward Marketplace");?></p>
                 <?php if($user): ?>
@@ -19,7 +19,10 @@
                 <?php endif;?>
             </div>
         </div>
-        <div class="col-xs-12 col-md-7">
+        <div class="hidden-xs col-sm-1">
+            <div class="vertical-divider"></div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
             <div class="welcome-stationary">
                 <img alt="" class="pull-right" src="<?=$this->baseURL('resources/app/images/slider2.jpg');?>" />
             </div>
@@ -69,10 +72,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -131,10 +134,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -165,10 +168,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -199,10 +202,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -233,10 +236,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -267,10 +270,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -293,10 +296,10 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-6 text-center">
-            <img src="<?=$this->baseURL('resources/app/images/featured-bottom-spot-1.jpg');?>" />
+            <img class="img-responsive" src="<?=$this->baseURL('resources/app/images/featured-bottom-spot-1.jpg');?>" />
         </div>
         <div class="col-xs-12 col-sm-6 text-center">
-            <img src="<?=$this->baseURL('resources/app/images/featured-bottom-spot-2.jpg');?>" />
+            <img class="img-responsive" src="<?=$this->baseURL('resources/app/images/featured-bottom-spot-2.jpg');?>" />
         </div>
     </div>
 </div>
@@ -335,10 +338,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -369,10 +372,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -403,10 +406,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -437,10 +440,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="product-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -471,10 +474,10 @@
                                             </div>
                                             <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title?></a></h5>
                                             <div class="reward-price">
-                                                <span class="normal-price"><i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?></span>
+                                                <span class="normal-price"><i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?></span>
                                             </div>
                                             <a title="Add to cart" href="<?=$this->baseURL('checkout/cart/add/'.$reward->id)?>" class="btn btn-block btn-default">
-                                                <i class="fa fa-shopping-cart"></i><?=_("Add to cart");?>
+                                                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
                                             </a>
                                         </div>
                                     <?php endforeach; ?>
@@ -502,7 +505,7 @@
     <div class="row">
         <div class="col-xs-12 text-center">
             <a href="<?=$this->baseURL('#');?>">
-                <img src="<?=$this->baseURL('resources/app/images/homegoods-spot.jpg');?>" />
+                <img class="img-responsive" src="<?=$this->baseURL('resources/app/images/homegoods-spot.jpg');?>" />
             </a>
         </div>
     </div>

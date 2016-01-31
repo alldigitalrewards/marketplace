@@ -12,7 +12,7 @@ Class Transaction extends \Zewa\Model
         parent::__construct();
     }
 
-    public function queueTransaction($uniqueId, array $rewards, array $shipping)
+    public function queueTransaction($uniqueId, $rewards, $shipping)
     {
         $sql = 'INSERT INTO Transaction (unique_id, rewards, shipping) VALUES (?, ?, ?)';
         $arguments = [$uniqueId, json_encode($rewards), json_encode($shipping)];

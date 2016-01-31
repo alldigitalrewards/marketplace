@@ -7,9 +7,6 @@ use App\Modules\Transaction\AbstractTransactionController;
 Class Complete extends AbstractTransactionController
 {
 
-    use Traits\GenericTrait;
-    use Traits\UserTrait;
-
     public function __construct()
     {
         parent::__construct();

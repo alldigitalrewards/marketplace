@@ -2,7 +2,7 @@
     <!-- row -->
     <div class="row">
         <!-- Reward -->
-        <div class="col-xs-4">
+        <div class="col-xs-12 col-md-4">
             <!-- reward-imge-->
             <div class="reward-image">
                 <div class="reward-full">
@@ -15,28 +15,34 @@
             </div>
             <!-- reward-imge-->
         </div>
-        <div class="col-xs-8">
-            <h3>
-                <?=$reward->title?>
-                <span class="pull-right">
-                    <i class="fa fa-tag"></i> <?=number_format($reward->credit_cost, 0, '', ',');?>
-                </span>
-            </h3>
+        <div class="col-xs-12 col-md-8">
+            <div class="row">
+                <div class="col-sm-8 col-md-9">
+                    <h3>
+                        <?=$reward->title?>
+                    </h3>
+
+                </div>
+                <div class="col-sm-4 col-md-3">
+                    <h3 class="text-right">
+                        <i class="fa fa-dollar"></i> <?=number_format($reward->credit_cost / 1000, 2, '.', ',');?>
+                    </h3>
+                </div>
+            </div>
             <hr/>
             <br />
             <div class="reward-desc">
                 <?=$reward->description?>
             </div>
             <br /><br />
-            <div class="pull-left">
+            <div class="pull-right">
                 <a class="btn btn-default" data-toggle="modal" data-target="#termModal" href="javascript:void(0)">
                     <i class="fa fa-check"></i> <?=_("Terms");?>
                 </a>
+                <a class="btn btn-primary" href="<?=$this->baseURL('checkout/cart/add/' . $reward->id . '?r=' . base64_encode(urlencode($this->currentURL())))?>">
+                    <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
+                </a>
             </div>
-
-            <a class="btn btn-primary pull-right" href="<?=$this->baseURL('checkout/cart/add/' . $reward->id . '?r=' . base64_encode(urlencode($this->currentURL())))?>">
-                <i class="fa fa-shopping-cart"></i> <?=_("Add to cart");?>
-            </a>
         </div>
         <!-- ./reward-->
     </div>

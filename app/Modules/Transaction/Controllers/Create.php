@@ -22,6 +22,7 @@ Class Create extends AbstractTransactionController
         $transaction = ['rewards' => $rewards, 'shipping_address' => $shipping];
         $transaction = json_decode($this->rewards->createUserTransaction($uniqueId, $transaction));
 
+
         if ($transaction->success !== true) {
             $transactionModel = new Models\Transaction();
             $transactionModel->queueTransaction($uniqueId, $rewards, $shipping);

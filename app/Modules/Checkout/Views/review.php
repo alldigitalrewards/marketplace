@@ -14,17 +14,20 @@ $this->addJS([
                         <?php if($cart): ?>
 
                         <form action="<?=$this->baseURL('checkout/cart/review');?>" method="post">
+                            <div class="panel-heading">
 
+                                <div class="col-xs-12">
+                                    <h3><?=_("Review and complete your reward redemption below");?></h3>
+                                    <hr />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
                             <div class="panel-body">
                                 <?php $i = 0; $total = 0;?>
 
                                 <div class="row">
-                                    <div class="col-xs-12">
-                                        <h3><?=_("Review and complete your reward redemption below");?></h3>
-                                        <hr />
-                                        <br />
-                                    </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-md-4">
                                         <div class="well">
                                             <h4><?=_("Shipping address");?></h4>
                                             <div class="row">
@@ -94,7 +97,7 @@ $this->addJS([
 
                                         </div>
                                     </div>
-                                    <div class="col-sm-8">
+                                    <div class="col-md-8">
                                         <?php foreach($cart as $reward): $i++; ?>
                                             <?php $total = bcadd($total, bcmul($reward->credit_cost, $reward->cart_quantity));?>
                                             <div class="row">
@@ -107,7 +110,7 @@ $this->addJS([
                                                     <div class="cart-description"><?=$reward->description;?></div>
                                                 </div>
                                                 <div class="col-xs-5">
-                                                    <br /><br />
+                                                    <br />
                                                     <div class="col-xs-4 text-right">
                                                         <h6><strong><?=number_format($reward->credit_cost, 0, '', ',');?> <span class="text-muted">&times;</span></strong></h6>
                                                     </div>
@@ -152,9 +155,10 @@ $this->addJS([
 
 
                         </form>
+                        <div class="panel-body">
+
                         <div class="row">
-                            <div class="col-xs-6"></div>
-                            <div class="col-xs-3 text-center pay-with-card">
+                            <div class="col-xs-offset-6 col-xs-3 text-center pay-with-card">
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <h4><strong><i class="fa fa-dollar"></i> <?=number_format(($total / 1000), 2, '.', ',');?></strong></h4>
@@ -192,6 +196,8 @@ $this->addJS([
                                     </div>
                                 </div>
                             </div>
+
+                        </div>
 
                         </div>
                         <?php else: ?>

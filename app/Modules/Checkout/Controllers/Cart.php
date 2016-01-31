@@ -26,6 +26,9 @@ Class Cart extends AbstractCheckoutController
     private function processQuantities()
     {
         $quantityAdjustment = $this->request->post("quantity");
+        if($this->cart === false) {
+            return false;
+        }
         foreach($this->cart as $key => $c) {
             foreach($quantityAdjustment as $reward => $quantity) {
                 if($c->id == $reward) {
@@ -52,7 +55,7 @@ Class Cart extends AbstractCheckoutController
         if ($token !== false) {
             $this->paymentType = 'card';
             $customer = \Stripe\Customer::create(array(
-                'email' => $this->user->email, //'customer@example.com',
+                'email' => $this->user->email_address, //'customer@example.com',
                 'card' => $token
             ));
 
