@@ -6,7 +6,7 @@
             <th><?=_("Type");?></th>
             <th><?=_("Reward");?></th>
             <th><?=_("Date");?></th>
-            <th><?=_("Credits");?></th>
+            <th><?=_("Cost");?></th>
             <th><?=_("View");?></th>
         </tr>
         </thead>
@@ -25,8 +25,8 @@
                 <td><?=$transaction->rewards?></td>
                 <td><?=$transaction->processed?></td>
                 <td>
-                    <?php if($transaction->payment_method != 'redemption'):?>
-                        <?=number_format($transaction->credit_cost, 0, '', ',');?>
+                    <?php if($transaction->payment_method == 'point'):?>
+                        <i class="fa fa-dollar"></i><?=number_format($transaction->credit_cost / 1000, 2, '.', ',');?>
                     <?php endif;?>
                 </td>
                 <td><a data-target="#transactionModal" data-toggle="modal" href="<?=$this->baseURL('transaction/view/' .$transaction->transaction_id);?>" class="btn btn-default btn-sm"><?=_("View");?></a></td>

@@ -44,7 +44,7 @@
                     <?php endif;?>
                 </td>
                 <?php if($transaction->payment_method != 'redemption'):?>
-                    <td><?=number_format($item->credit_cost, 0);?></td>
+                    <td><i class="fa fa-dollar"></i><?=number_format($item->credit_cost / 1000, 2, '.', ',');?></td>
                 <?php endif;?>
             </tr>
         <?php endforeach;?>
@@ -53,13 +53,13 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-sm pull-left" data-dismiss="modal"><?=_("Close");?></button>
+    <button type="button" class="btn btn-default btn-sm pull-left" data-dismiss="modal"><?=_("Close");?></button>
     <?php if($transaction->payment_method != 'redemption'):?>
 
         <label class="pull-right">
             <strong><?=_("Total");?></strong>:
         <span class="alert alert-success" style="padding:5px ">
-            <?=number_format($transaction->credit_cost, 0);?>
+            <i class="fa fa-dollar"></i><?=number_format($transaction->credit_cost / 1000, 2, '.', ',');?>
         </span>
         </label>
 
