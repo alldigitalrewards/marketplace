@@ -5,58 +5,32 @@ namespace App\Modules\Transaction\Controllers;
 use App\Classes\AbstractController;
 use App\Models;
 use App\Modules\Checkout\Controllers\Cart;
+use App\Modules\Transaction\AbstractTransactionController;
 use App\Traits;
 
-Class Create extends AbstractController
+Class Create extends AbstractTransactionController
 {
 
-    use Traits\GenericTrait;
-    use Traits\UserTrait;
+    private $user;
+    private $cart;
 
-    public function __construct($deductCredit = true)
+    public function __construct($uniqueId, array $rewards, $shipping)
     {
         parent::__construct();
-        $this->process($deductCredit);
-    }
 
-    private function process($deductCredit = true)
-    {
-        $user = $this->data['user'];
-        $cart = $this->data['cart'];
+        $this->user = $this->request->session('user');
+        $this->cart = $this->request->session('cart');
 
-        //Check credits
+        $transaction = ['rewards' => $rewards, 'shipping_address' => $shipping];
+        $transaction = json_decode($this->rewards->createUserTransaction($uniqueId, $transaction));
 
-        $transaction = ['rewards' => []];
-
-        foreach ($cart as $c) {
-            $transaction['rewards'][] = $c->id;
+        if ($transaction->success !== true) {
+            $transactionModel = new Models\Transaction();
+            $transactionModel->queueTransaction($uniqueId, $rewards, $shipping);
         }
 
-        $transaction['shipping_address'] = $user->shipping;
-        $transactionModel = new Models\Transaction();
-        $create = $transactionModel->create($user->unique_id, $transaction);
+        return true;
 
-        if ($create->success !== true) {
-            return false;
-        }
-
-        if($deductCredit !== false) {
-
-            $oCart = new Cart();
-            $userModel = new Models\User();
-            $remainingCredit = bcsub($user->credits, $oCart->total(), 2);
-            //Update user credit
-            $userModel->updateUser($user->unique_id, [
-                'credits' => $remainingCredit,
-                'shipping' => json_encode($user->shipping)
-            ]);
-
-            $user->credits = $remainingCredit;
-            $this->request->setSession('user', $user);
-
-        }
-
-        $this->request->setSession('cart', false);
     }
 
 }

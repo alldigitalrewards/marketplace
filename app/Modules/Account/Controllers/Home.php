@@ -2,27 +2,17 @@
 
 namespace App\Modules\Account\Controllers;
 
-use App\Classes\AbstractController;
-use Zewa\View;
 use App\Models;
+use App\Modules\Account\AbstractAccountController;
 use App\Traits;
 
-Class Home extends AbstractController {
+Class Home extends AbstractAccountController{
     
     use Traits\InputHelper;
-    
-//    public $data;
-    
+
     public function __construct()
     {
         parent::__construct();
-//        $this->data = [];
-//        $this->merch = new Models\Merchandise();
-//        $this->permission = $this->request->session('user') ? 1 : 0;
-//        $this->data['feedUrl'] = $this->configuration->api->feed_url;
-//        $this->data['categories'] = $this->merch->fetchCategoriesAndProducts();
-//        $this->data['search'] = $this->request->get('q','');
-//        $this->data['isLoggedIn'] = $this->permission;
     }
 
     public function index()
@@ -30,15 +20,7 @@ Class Home extends AbstractController {
         $this->handleAuthentication();
 
         $transactionModel = new Models\Transaction;
-//        $userModel = new Models\User;
-//        $userData = $this->request->session('user');
-//        $userData = $userModel->fetchUserByUniqueId($userData['unique_id']);
-//        var_dump($userData);die();
-//        $this->data['user'] = $userData;
-//        $this->data['stateOptions'] = $this->fetchStateOptions($userData->state);
-//        $this->data['noTransactions'] = empty($transactionModel->fetchPaginated($userData->unique_id));
-        
-        $view = new View();
+        $view = new \Zewa\View();
         $view->setLayout('marketplace');
         $view->setView('dashboard');
         $view->setProperty($this->data);
@@ -47,7 +29,7 @@ Class Home extends AbstractController {
     
     public function login()
     {
-        $view = new View();
+        $view = new \Zewa\View();
         $view->setLayout('marketplace');
         $view->setView('login');
         $view->setProperty($this->data);

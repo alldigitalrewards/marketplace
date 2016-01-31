@@ -5,7 +5,7 @@
         <!-- Reward -->
         <div class="col-xs-12">
             <h3>Frequenty Asked Questions</h3>
-            <p>All Digital Rewards is a points-based reward marketplace offering thousands of products, services, and game entries for direct redemption. Each secure transaction is supported by a confirmation page and email, and is recorded on your "My Account" page.</p>
+            <p>The market place is a points-based reward marketplace offering thousands of products, services, and game entries for direct redemption. Each secure transaction is supported by a confirmation page and email, and is recorded on your "My Account" page.</p>
             <ul class="no-bullets">
                 <li class="question">
                     <strong>How do I check how many points I have and how I got them?</strong> <span class="collapse-indicator"><i class="fa fa-fw fa-plus"></i></span>

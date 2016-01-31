@@ -6,7 +6,7 @@
         <div class="col-xs-12">
             <h3>Privacy Policy</h3>
             <p>
-                YOUR COMPANY NAME HERE market place is owned and operated by All Digital Rewards. We are focused on building an online community of members who can read
+                The market place is owned and operated by All Digital Rewards. We are focused on building an online community of members who can read
                 about and choose from a wide variety of digitally served reward programs. The protection of your privacy is of great importance to us. Our Privacy
                 Statement describes our commitment to protecting your privacy. In order to fully understand your rights related to privacy issues, we encourage you to read
                 this Privacy Statement and to consult our Terms and Conditions page. As our services evolve, we may from time to time amend this Privacy Statement. Please

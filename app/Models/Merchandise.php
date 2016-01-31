@@ -13,17 +13,16 @@ Class Merchandise extends  Base
         return json_decode($this->rewards->getReward($rewardId));
     }
 
-    public function fetchRewards($page = 1, $perPage = 30, $filters = [])
-    {
+//    public function fetchRewards($page = 1, $perPage = 30, $filters = [])
+//    {
 //        print_r($this->rewards->getRewards($page, $perPage, $filters));
-        return json_decode($this->rewards->getRewards($page, $perPage, $filters));
-    }
-
-    public function fetchHotPicks()
-    {
-        return json_decode($this->rewards->getRewards(1, 5, ['hotpick' => true]));
-    }
-    
+//    }
+//
+//    public function fetchHotPicks()
+//    {
+//        return json_decode($this->rewards->getRewards(1, 5, ['hotpick' => true]));
+//    }
+//
     public function fetchCategories()
     {
         return json_decode($this->rewards->getRewardCategories());

@@ -216,6 +216,15 @@ $(document).ready(function() {
         });
 
 
+        $(".update-quantities").on('click', function(e) {
+            e.preventDefault();
+            var that = $(this),
+                input = $('<input type="hidden" name="updateQauntities" />').val(1);
+
+            that.addClass('fa-spin');
+            $('form').append(input).submit();
+        });
+
         $('.no-bullets li > strong, .no-bullets li .collapse-indicator').click(function(e){
             var that = $(this);
             var collapseControl = (e.target.className === 'collapse-indicator' ? that : that.parent().find('.collapse-indicator'));
@@ -229,8 +238,6 @@ $(document).ready(function() {
         });
 
     });
-
-
 
 
     $(document).on("hidden.bs.modal", "#transactionModal", function (e) {

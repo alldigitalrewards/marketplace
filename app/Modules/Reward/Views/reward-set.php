@@ -11,7 +11,7 @@
                 </a>
             </div>
             <div class="meta-container">
-                <h5 class="truncate"><a href="#"><?=$reward->title;?></a></h5>
+                <h5 class="truncate"><a href="<?=$this->baseURL('reward/view/' . $reward->id);?>"><?=$reward->title;?></a></h5>
                 <div class="description">
                     <hr/>
                     <br />

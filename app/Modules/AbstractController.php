@@ -1,22 +1,27 @@
 <?php
 
-namespace App\Classes;
+namespace App\Modules;
 use App\Models\Merchandise;
 
-Class AbstractController extends \Zewa\Controller
+abstract Class AbstractController extends \Zewa\Controller
 {
 
     protected $data;
-    protected $merchandise;
+    protected $rewards;
 
     public function __construct()
     {
         parent::__construct();
         $this->data = [];
-        $this->merchandise = new Merchandise();
+        $endpoint = $this->configuration->api->host;
+        $apiUser = $this->configuration->api->alias;
+        $apiKey = $this->configuration->api->key;
+
+        $this->rewards = new \ADR\Rewards($endpoint, $apiUser, $apiKey);
+
         $this->logged = $this->request->session('user') ? 1 : 0;
         $this->data['feedURL'] = $this->configuration->api->feed_url;
-        $this->data['categories'] = $this->merchandise->fetchCategories();
+        $this->data['categories'] = json_decode($this->rewards->getRewardCategories());
         $this->data['cart'] = $this->request->session('cart');
         $this->data['user'] = $this->request->session('user');
     }

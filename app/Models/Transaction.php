@@ -5,31 +5,29 @@ namespace App\Models;
 use Curl\Curl;
 use App\Traits;
 
-Class Transaction extends Base
+Class Transaction extends \Zewa\Model
 {
     public function __construct()
     {
         parent::__construct();
     }
-    
-    public function create($uniqueId, $data)
+
+    public function queueTransaction($uniqueId, array $rewards, array $shipping)
     {
-//        print_r($this->rewards->createUserTransaction($uniqueId, $data));
-        return json_decode($this->rewards->createUserTransaction($uniqueId, $data));
+        $sql = 'INSERT INTO Transaction (unique_id, rewards, shipping) VALUES (?, ?, ?)';
+        $arguments = [$uniqueId, json_encode($rewards), json_encode($shipping)];
+        return $this->modify($sql, $arguments);
     }
 
-    public function fetchTransaction($uniqueId, $transactionId)
-    {
-        $transactions = json_decode($this->rewards->getUserTransaction($uniqueId, $transactionId));
-//        print_r($this->rewards->getUserTransaction($uniqueId, $transactionId));die();
-        return $transactions;
-    }
-
-    public function fetchPaginated($uniqueId, $page, $offset)
-    {
-//        print_r($this->rewards->getUserTransactions($uniqueId, $page, $offset));
-        return json_decode($this->rewards->getUserTransactions($uniqueId, $page, $offset));
-//        die();
-    }
+//    public function fetchTransaction($uniqueId, $transactionId)
+//    {
+//        $transactions = json_decode($this->rewards->getUserTransaction($uniqueId, $transactionId));
+//        return $transactions;
+//    }
+//
+//    public function fetchPaginated($uniqueId, $page, $offset)
+//    {
+//        return json_decode($this->rewards->getUserTransactions($uniqueId, $page, $offset));
+//    }
     
 }

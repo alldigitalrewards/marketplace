@@ -3,10 +3,11 @@
 namespace App\Modules\Reward\Controllers;
 
 //use Zewa\View;
-use App\Classes\AbstractController;
+//use App\Classes\AbstractController;
 use App\Models;
+use App\Modules\Reward\AbstractRewardController;
 
-Class View extends AbstractController
+Class View extends AbstractRewardController
 {
     public function __construct()
     {
@@ -40,7 +41,7 @@ Class View extends AbstractController
         $filters = [
             'title' => $this->request->get('title'),
             'priceMin' => $this->request->get('minPrice'),
-            'priceMax' => $this->request->get('maxPrice')
+            'priceMax' => $this->request->get('maxPrice'),
         ];
 
         $categoryIds = $this->request->get('categoryIds');
@@ -48,8 +49,9 @@ Class View extends AbstractController
             $filters['categoryIds'] = array_values((array)$categoryIds);
         }
 
-        $rewards = $merchandise->fetchRewards($page, $offset, $filters);
-        $this->data['rewards'] = $rewards->results;
+
+        $rewards = json_decode($this->rewards->getRewards($page, $offset, $filters));
+        $this->data['rewards'] = $rewards->result;
         $this->data['count'] = (int) $rewards->count;
         $this->data['last'] = ($page * $offset) >= $this->data['count'];//($this->data['count'] - $offset);
         $this->data['first'] = ($page == 1);
@@ -66,7 +68,7 @@ Class View extends AbstractController
     private function rewardSet()
     {
         $view = new \Zewa\View();
-        $this->data['categories'] = $this->merchandise->fetchCategories();
+//        $this->data['categories'] = $this->merchandise->fetchCategories();
         $this->data['search'] = $this->request->get('title','');
         $this->data['categoryIds'] = (array)$this->request->get('categoryIds');
         $this->data['minPrice'] = $this->request->get('minPrice', false);
@@ -79,7 +81,7 @@ Class View extends AbstractController
 
     private function rewardSingle($rewardId)
     {
-        $this->data['reward'] = $this->merchandise->fetchReward($rewardId);
+        $this->data['reward'] = json_decode($this->rewards->getReward($rewardId));
         if (empty($this->data['reward'])) {
             return false;
         }

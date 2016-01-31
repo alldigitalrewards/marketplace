@@ -4,9 +4,10 @@ namespace App\Modules\Transaction\Controllers;
 
 use App\Classes\AbstractController;
 use App\Models;
+use App\Modules\Transaction\AbstractTransactionController;
 use App\Traits;
 
-Class View extends AbstractController
+Class View extends AbstractTransactionController
 {
 
     use Traits\GenericTrait;
@@ -22,8 +23,7 @@ Class View extends AbstractController
         $page = $this->request->get('transactionPage', 1);
         $offset = $this->request->get('transactionOffset', 10);
 
-        $transactionModel = new Models\Transaction;
-        $transactions = $transactionModel->fetchPaginated( $this->data['user']->unique_id, $page, $offset );
+        $transactions = json_decode($this->rewards->getUserTransactions( $this->data['user']->unique_id, $page, $offset ));
         $this->data['transactions'] = $transactions->result;
         $this->data['count'] = (int) $transactions->count;
         $this->data['last'] = ($page * $offset) >= $this->data['count'];//($this->data['count'] - $offset);
@@ -38,9 +38,7 @@ Class View extends AbstractController
 
     private function transactionSingle($transactionId)
     {
-
-        $transactionModel = new Models\Transaction;
-        $this->data['transaction'] = $transactionModel->fetchTransaction( $this->data['user']->unique_id, $transactionId);
+        $this->data['transaction'] = json_decode($this->rewards->getUserTransaction( $this->data['user']->unique_id, $transactionId));
 
         $view = new \Zewa\View();
         $view->setProperty($this->data);

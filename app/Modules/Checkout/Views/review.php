@@ -107,17 +107,23 @@ $this->addJS([
                                                     <div class="cart-description"><?=$reward->description;?></div>
                                                 </div>
                                                 <div class="col-xs-5">
-                                                    <br /><br /><br />
-                                                    <div class="col-xs-7 text-right">
+                                                    <br /><br />
+                                                    <div class="col-xs-4 text-right">
                                                         <h6><strong><?=number_format($reward->credit_cost, 0, '', ',');?> <span class="text-muted">&times;</span></strong></h6>
                                                     </div>
                                                     <div class="col-xs-3">
                                                         <input type="text" name="quantity[<?=$reward->id;?>]" class="form-control input-sm" value="<?=$reward->cart_quantity?>">
                                                     </div>
-                                                    <div class="col-xs-2 text-right">
-                                                        <a class="btn btn-link" href="<?=$this->baseURL('checkout/cart/remove/' . $reward->id . '?r=' . base64_encode(urlencode($this->currentURI())));?>">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
+                                                    <div class="col-xs-5 text-right">
+                                                        <div class="btn-group" role="group">
+                                                            <a class="btn btn-link update-quantities">
+                                                                <i class="fa fa-refresh"></i>
+                                                            </a>
+                                                            <a class="btn btn-link" href="<?=$this->baseURL('checkout/cart/remove/' . $reward->id . '?r=' . base64_encode(urlencode($this->currentURI())));?>">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,10 +134,17 @@ $this->addJS([
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-12 text-center">
+                                <div class="col-xs-12 text-right">
                                     <div class="checkbox">
                                         <label>
-                                            <input name="terms" <?=isset($user->terms) && $user->terms === 'on' ? 'checked="checked"':'';?> type="checkbox"><?=_("I confirm the shipping address above is valid");?>
+                                            <input name="terms" <?=isset($user->approvedTerms) && $user->approvedTerms === 'on' ? 'checked="checked"':'';?> type="checkbox"><?=_("I agree to redeem for the above rewards");?>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 text-right">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="shipping" <?=isset($user->approvedShipping) && $user->approvedShipping === 'on' ? 'checked="checked"':'';?> type="checkbox"><?=_("I confirm the shipping address above is valid");?>
                                         </label>
                                     </div>
                                 </div>
@@ -140,7 +153,7 @@ $this->addJS([
 
                         </form>
                         <div class="row">
-                            <div class="col-xs-3"></div>
+                            <div class="col-xs-6"></div>
                             <div class="col-xs-3 text-center pay-with-card">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -179,7 +192,6 @@ $this->addJS([
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-3"></div>
 
                         </div>
                         <?php else: ?>

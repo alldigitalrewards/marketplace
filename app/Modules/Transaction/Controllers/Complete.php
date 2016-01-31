@@ -5,9 +5,10 @@ namespace App\Modules\Transaction\Controllers;
 use App\Classes\AbstractController;
 use App\Models;
 use App\Modules\Checkout\Controllers\Cart;
+use App\Modules\Transaction\AbstractTransactionController;
 use App\Traits;
 
-Class Complete extends AbstractController
+Class Complete extends AbstractTransactionController
 {
 
     use Traits\GenericTrait;

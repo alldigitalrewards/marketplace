@@ -5,8 +5,9 @@ namespace App\Modules\Content\Controllers;
 //use Zewa\View;
 use App\Classes\AbstractController;
 use App\Models;
+use App\Modules\Content\AbstractContentController;
 
-Class Faq extends AbstractController
+Class Faq extends AbstractContentController
 {
     public function __construct()
     {

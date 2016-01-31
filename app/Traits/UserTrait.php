@@ -70,8 +70,8 @@ trait UserTrait
 
         $rules = v::key('firstname', v::notEmpty()->setName('First name'))
             ->key('lastname', v::notEmpty()->setName('Last name'))
-            ->key('address', v::alnum()->notEmpty()->setName('Address'))
-            ->key('secondary_address', v::when(v::notEmpty(), v::alnum(), v::alwaysValid())->setName('Address 2'))
+            ->key('address', v::alnum(".,-'")->notEmpty()->setName('Address'))
+            ->key('secondary_address', v::when(v::notEmpty(), v::alnum(".,-'"), v::alwaysValid())->setName('Address 2'))
             ->key('city', v::alnum()->notEmpty()->setName('City'))
             ->key('state', v::alnum()->notEmpty()->setName('State'))
             ->key('zip', v::when(v::notEmpty(), v::postalCode('US'), v::alwaysValid())->notEmpty()->setName('Zipcode'));
@@ -83,7 +83,7 @@ trait UserTrait
         try {
             $rules->check($address);
         } catch(ValidationExceptionInterface $exception) {
-            $this->error = $exception->getMainMessage();
+//            $this->error = $exception->getMainMessage();
         }
 
         return false;

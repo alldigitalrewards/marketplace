@@ -16,5 +16,6 @@ return [
     'gcProbability' => 1,
     'gcDivisor' => 100,
     'tableName' => 'Session',
+//    'domain'    => '.vagrantshare.com',
     'domain'    => 'marketplace.client'
 ];

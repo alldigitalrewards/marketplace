@@ -1,3 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-5">
+            <div class="welcome-area">
+                <p><span class="x2 blue"><?=_("Welcome");?></span> <?=_("to your Reward Marketplace");?></p>
+                <?php if($user): ?>
+                    <p><?=_("Your current balance is");?> <strong><?=number_format($user->credits, 0, '', ',');?></strong></p>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a class="btn btn-block btn-default" href="<?=$this->baseURL('account');?>"><?=_("My Account");?></a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="btn btn-block btn-default" href="<?=$this->baseURL('account/authenticate');?>"><?=_("Logout");?></a>
+                        </div>
+                    </div>
+
+                <?php else:?>
+                    <p><a data-toggle="modal" data-target="#loginModal" href="#"><?=_("Click here to login and view your balance");?></a></p>
+                <?php endif;?>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-7">
+            <div class="welcome-stationary">
+                <img alt="" class="pull-right" src="<?=$this->baseURL('resources/app/images/slider2.jpg');?>" />
+            </div>
+        </div>
+    </div>
+</div>
+<br /><br />
 
 <div class="container featured-spots">
     <div class="row">
@@ -26,8 +55,8 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="featured-rewards">
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -88,8 +117,8 @@
                         <div role="tabpanel" class="tab-pane active" id="electronics">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -122,8 +151,8 @@
                         <div role="tabpanel" class="tab-pane" id="sound">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -156,8 +185,8 @@
                         <div role="tabpanel" class="tab-pane" id="tablet">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -190,8 +219,8 @@
                         <div role="tabpanel" class="tab-pane" id="tv">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -224,8 +253,8 @@
                         <div role="tabpanel" class="tab-pane" id="entertainment">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -292,8 +321,8 @@
                         <div role="tabpanel" class="tab-pane active" id="travel">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -326,8 +355,8 @@
                         <div role="tabpanel" class="tab-pane" id="luggage">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -360,8 +389,8 @@
                         <div role="tabpanel" class="tab-pane" id="cameras">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -394,8 +423,8 @@
                         <div role="tabpanel" class="tab-pane" id="accessories">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
@@ -428,8 +457,8 @@
                         <div role="tabpanel" class="tab-pane" id="bags">
 
                             <div class="row">
-                                <?php if(!empty($featuredProducts)): ?>
-                                    <?php shuffle($featuredProducts); foreach($featuredProducts as $reward): ?>
+                                <?php if(!empty($featured)): ?>
+                                    <?php shuffle($featured); foreach($featured as $reward): ?>
                                         <div class="col-sm-3 item">
                                             <div class="img-container">
                                                 <a href="<?=$this->baseURL('reward/view/'.$reward->id)?>">
