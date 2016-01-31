@@ -5,7 +5,7 @@ namespace App\Models;
 use Curl\Curl;
 use App\Traits;
 
-Class User extends Base
+Class User extends \Zewa\Model
 {
     public function __construct()
     {
@@ -46,62 +46,18 @@ Class User extends Base
         
         return true;
     }
-    
-    public function authenticate($email,$password) 
-    {
-        $sql = 'SELECT * FROM User WHERE email_address = ? AND password = ?';
-        return $this->fetch($sql, [$email, sha1($password)], 'row');
-    }
-    
-    public function fetchUserByUniqueId($uniqueId)
-    {
-        return json_decode($this->rewards->getUser($uniqueId));
-    }
 
     public function updateUser($uniqueId, $data)
     {
         $sql = 'UPDATE User SET credits = ?, shipping = ? WHERE unique_id = ?';
         $arguments = [$data['credits'], $data['shipping'], $uniqueId];
-//        print_r($sql);
-//        var_dump($arguments);
-//        die();
         return $this->modify($sql, $arguments);
     }
-//updateUser
-    public function updateUserByUniqueId($uniqueId, $data) 
-    {
-        if (!empty($data['firstname']) && !empty($data['lastname']) && !empty($data['email_address'])) {
-            
-            //Create user locally
-            $sql = 'UPDATE User SET email_address = ?, firstname = ?, lastname = ?';
-            $arguments = [
-                $data['email_address'],
-                $data['firstname'],
-                $data['lastname']
-            ];
-            
-            if (!empty($data['password'])) {
-                $sql .= ', password = ?';
-                $arguments[] = 
-                    password_hash($data['password'], PASSWORD_BCRYPT, ['cost' => 11]);
-            }
-            
-            $arguments[] = $uniqueId;
-            $sql .= ' WHERE unique_id = ?';
-    
-            $this->modify($sql, $arguments);
-               
-        }
-        
-        //Update user on remote server
-        $result = json_decode($this->rewards->updateUser($uniqueId, $data));
 
-        return $result->success;
+    public function authenticate($email,$password) 
+    {
+        $sql = 'SELECT * FROM User WHERE email_address = ? AND password = ?';
+        return $this->fetch($sql, [$email, sha1($password)], 'row');
     }
 
-    public function updateCartId($userId,$cartId)
-    {
-        $sql = 'UPDATE User SET cart_id = ? WHERE id = ?';
-        return $this->modify($sql, [$cartId,$userId]);
-    }
 }

@@ -1,13 +1,7 @@
 <?php
 $this->addCSS([
-    'resources/jquery.gritter/css/jquery.gritter.css',
     'resources/bootstrap/dist/css/bootstrap.min.css',
     'resources/font-awesome/css/font-awesome.min.css',
-    'resources/select2/dist/css/select2.min.css',
-    'resources/bxslider-4/dist/jquery.bxslider.css',
-    'resources/owl.carousel/dist/assets/owl.carousel.css',
-    'resources/owl.carousel/dist/assets/owl.theme.default.min.css',
-    'resources/jquery-ui/themes/base/all.css',
     'resources/app/css/style.css',
     'resources/app/css/custom.css'
 ], 'prepend');
@@ -15,22 +9,11 @@ $this->addCSS([
 $this->addJS([
     'resources/jquery/dist/jquery.min.js',
     'resources/bootstrap/dist/js/bootstrap.min.js',
-    'resources/select2/dist/js/select2.min.js',
-    'resources/bxslider-4/dist/jquery.bxslider.min.js',
-    'resources/owl.carousel/dist/owl.carousel.min.js',
-    'resources/countdown/jquery.plugin.js',
-    'resources/countdown/jquery.countdown.min.js',
-    'resources/jquery.actual/jquery.actual.min.js',
     'resources/querystring.js',
     'resources/zewa-paginator/paginator.js',
-    'resources/request.js',
-    'resources/jquery.gritter/js/jquery.gritter.min.js',
-    'resources/app/js/theme-script.js',
     'resources/app/js/app.js'
 ], 'prepend');
 
-$user = $this->request->session('user');
-//var_dump($user);die();
 ?>
 <!DOCTYPE html>
 <html>

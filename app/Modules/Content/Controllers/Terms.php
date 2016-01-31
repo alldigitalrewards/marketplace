@@ -2,9 +2,6 @@
 
 namespace App\Modules\Content\Controllers;
 
-//use Zewa\View;
-use App\Classes\AbstractController;
-use App\Models;
 use App\Modules\Content\AbstractContentController;
 
 Class Terms extends AbstractContentController

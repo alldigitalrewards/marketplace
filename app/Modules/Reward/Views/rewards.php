@@ -1,9 +1,3 @@
-<?php
-$this->addJS([
-    'resources/jquery-ui/jquery-ui.min.js',
-    'resources/app/js/merchandise/result.js'
-]);
-?>
 <div class="product-listing"
      data-paginate-alias="product-listing"
      data-paginate-cache="600"

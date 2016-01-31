@@ -2,13 +2,10 @@
 
 namespace App\Modules\Account\Controllers;
 
-use App\Models;
 use App\Modules\Account\AbstractAccountController;
-use App\Traits;
 
-Class Home extends AbstractAccountController{
-    
-    use Traits\InputHelper;
+Class Home extends AbstractAccountController
+{
 
     public function __construct()
     {
@@ -19,7 +16,6 @@ Class Home extends AbstractAccountController{
     {
         $this->handleAuthentication();
 
-        $transactionModel = new Models\Transaction;
         $view = new \Zewa\View();
         $view->setLayout('marketplace');
         $view->setView('dashboard');

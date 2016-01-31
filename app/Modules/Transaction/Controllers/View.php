@@ -2,17 +2,10 @@
 
 namespace App\Modules\Transaction\Controllers;
 
-use App\Classes\AbstractController;
-use App\Models;
 use App\Modules\Transaction\AbstractTransactionController;
-use App\Traits;
 
 Class View extends AbstractTransactionController
 {
-
-    use Traits\GenericTrait;
-    use Traits\UserTrait;
-
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +24,7 @@ Class View extends AbstractTransactionController
 
         $view = new \Zewa\View();
         $view->setProperty($this->data);
-        $view->setLayout('vanilla');
+        $view->setLayout(false);
         $view->setView('transactions');
         return $view;
     }
@@ -42,7 +35,7 @@ Class View extends AbstractTransactionController
 
         $view = new \Zewa\View();
         $view->setProperty($this->data);
-        $view->setLayout('vanilla');
+        $view->setLayout(false);
         $view->setView('transaction');
 
         return $view;
@@ -55,7 +48,7 @@ Class View extends AbstractTransactionController
         } else {
             $view = $this->transactionSet();
         }
-        $view->setLayout('vanilla');
+        $view->setLayout(false);
         return $view->render();
 
     }

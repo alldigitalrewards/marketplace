@@ -2,9 +2,7 @@
 
 namespace App\Modules\Transaction\Controllers;
 
-use App\Classes\AbstractController;
 use App\Models;
-use App\Modules\Checkout\Controllers\Cart;
 use App\Modules\Transaction\AbstractTransactionController;
 use App\Traits;
 

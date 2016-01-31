@@ -2,9 +2,6 @@
 
 namespace App\Modules\Reward\Controllers;
 
-//use Zewa\View;
-//use App\Classes\AbstractController;
-use App\Models;
 use App\Modules\Reward\AbstractRewardController;
 
 Class View extends AbstractRewardController
@@ -34,7 +31,6 @@ Class View extends AbstractRewardController
 
     private function paginateRewards()
     {
-        $merchandise = new Models\Merchandise();
         $page = $this->request->get('rewardPage');
         $offset = $this->request->get('rewardOffset');
 

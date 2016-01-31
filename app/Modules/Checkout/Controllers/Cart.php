@@ -2,16 +2,14 @@
 
 namespace App\Modules\Checkout\Controllers;
 
-use App\Classes\AbstractController;
 use App\Models;
 use App\Modules\Checkout\AbstractCheckoutController;
-use App\Modules\Transaction\Controllers\Create;
 use App\Traits;
 
 Class Cart extends AbstractCheckoutController
 {
 
-    use Traits\UserTrait;
+    use Traits\ValidationTrait;
 
     private $cart;
     private $user;
@@ -107,6 +105,7 @@ Class Cart extends AbstractCheckoutController
 
     private function processCart()
     {
+
         if($this->error === false) {
 
             unset($this->user->approvedTerms, $this->user->approvedShipping);
@@ -128,6 +127,7 @@ Class Cart extends AbstractCheckoutController
 
         }
 
+        return false;
     }
 
     private function processCartCheckout()
@@ -225,7 +225,6 @@ Class Cart extends AbstractCheckoutController
 
     public function add($rewardId)
     {
-        $title = "";
         //If the prize is already in cart then increment quantity
         $existingCardRewardIds = $this->getCartRewardIds();
 
