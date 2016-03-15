@@ -253,6 +253,20 @@ footer {
 }
 
 /* Cart Styling */
+
+.cart-description {
+  display: block; /* Fallback for non-webkit */
+  display: -webkit-box;
+  height: 79.52px; /* Fallback for non-webkit */
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1.42;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .cart-preview {
   padding:2px 0.8em;
 }

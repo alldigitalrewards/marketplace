@@ -53,12 +53,6 @@ $(document).ready(function() {
         }, 100);
     });
 
-    if(cartDescription.length > 0) {
-        cartDescription.each(function(index, value) {
-            $clamp($(value)[0], {clamp: 4});
-        });
-    }
-
     stripe.prop('disabled', false);
 
     stripe.on('click', function(e) {
